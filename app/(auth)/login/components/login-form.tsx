@@ -35,24 +35,20 @@ export function LoginForm() {
   }>();
 
   const handleSubmit = async (data: LoginSchemaType) => {
-    console.log(data);
     const response = await authSignIn(data);
-    console.log(response);
     setResponse(response);
   };
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)}>
-        <Card className="mx-auto min-w-96">
-          <CardHeader>
-            {authResponse && (
-              <DisplayLoginStatus
-                success={authResponse.success}
-                message={authResponse.message}
-              />
-            )}
-          </CardHeader>
+        <Card className="mx-auto min-w-96 p-2">
+          {authResponse && (
+            <DisplayLoginStatus
+              success={authResponse.success}
+              message={authResponse.message}
+            />
+          )}
           <CardHeader>
             <CardTitle className="text-2xl">Login</CardTitle>
             <CardDescription>
@@ -73,7 +69,7 @@ export function LoginForm() {
                     <div className="flex items-center">
                       <Label htmlFor="password">Password</Label>
                       <Link
-                        href="#"
+                        href="/forgot-password"
                         className="ml-auto inline-block text-sm underline"
                       >
                         Forgot your password?
