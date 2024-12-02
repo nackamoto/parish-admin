@@ -1,9 +1,17 @@
 // Server actions for auth module
 "use server";
 
-import { signIn } from "@/auth";
-import { LoginSchemaType } from "@/app/(auth)/login/components/login-form";
+import { signIn, signOut } from "@/auth";
+
 import { AuthError } from "next-auth";
+import { query } from "../_axios";
+import { AuthServices } from "./_services";
+import { ForgotPasswordSchemaType } from "./forgot-password/components/forgot-password";
+import { LoginSchemaType } from "./login/components/login-form";
+import { TErrorForgotPassword, TSuccessForgotPassword } from "./login/_types";
+import { redirect } from "next/navigation";
+import { VerifyOTPType } from "./verify-otp/components/verify-otp";
+import { isRedirectError } from "next/dist/client/components/redirect";
 
 export const authSignIn = async (credentials: LoginSchemaType) => {
   try {
@@ -40,5 +48,51 @@ export const authSignIn = async (credentials: LoginSchemaType) => {
       }
     }
     throw error;
+  }
+};
+
+export const authSignOut = async () =>
+  await signOut({ redirect: true, redirectTo: "/login" });
+
+export const authForgotPassword = async (
+  credentials: ForgotPasswordSchemaType
+) => {
+  if (!credentials) throw new Error("No credentials provided");
+  try {
+    const response = await query<TSuccessForgotPassword, TErrorForgotPassword>(
+      AuthServices.ForgotPassword(credentials)
+    );
+    if (response.success) {
+      return redirect(
+        `/verify-otp?credentials=${credentials.email_or_phone_number}`
+      );
+    }
+
+    // Know we know that the response was not successful, so destructure the response and get the message
+    const data = response as TErrorForgotPassword;
+
+    return {
+      success: false,
+      message: data?.email_or_phone_number?.invalid_email_or_phone,
+    };
+  } catch (error) {
+    if (isRedirectError(error)) {
+      throw error;
+    }
+  }
+};
+
+export const authVerifyOTP = async (credentials: VerifyOTPType) => {
+  try {
+    await query(AuthServices.VerifyOTP(credentials));
+    return {
+      success: true,
+      message: "OTP verification successful",
+    };
+  } catch {
+    return {
+      success: false,
+      message: "An unknown error occurred, try again",
+    };
   }
 };
