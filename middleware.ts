@@ -8,10 +8,7 @@ export default auth((req) => {
     if (publicRoutes.includes(req.nextUrl.pathname)) {
       return NextResponse.next();
     }
-    if (
-      req.nextUrl.pathname === rootRoute ||
-      req.nextUrl.pathname !== `/login`
-    ) {
+    if (req.nextUrl.pathname === rootRoute) {
       return NextResponse.redirect(new URL(`/login`, req.nextUrl));
     }
   }

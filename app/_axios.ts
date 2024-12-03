@@ -1,10 +1,6 @@
 import { auth } from "@/auth";
 import { ServicesType } from "@/types";
 import axios, { AxiosError } from "axios";
-import {
-  TErrorForgotPassword,
-  TSuccessForgotPassword,
-} from "./(auth)/login/_types";
 
 const _axios = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -26,24 +22,13 @@ const _axios_base = async (config: ServicesType) => {
   });
 };
 
-export const query = async <
-  Data = TSuccessForgotPassword,
-  Error = TErrorForgotPassword
->(
-  config: ServicesType
-) => {
+export const query = async <S, E = never>(config: ServicesType) => {
   try {
     const response = await _axios_base(config);
-    return {
-      success: true,
-      ...(response.data as Data),
-    };
+    return response.data as S;
   } catch (error) {
     if (error instanceof AxiosError) {
-      return {
-        success: false,
-        ...(error.response?.data as Error),
-      };
+      return error.response?.data as E;
     }
     throw error;
   }
