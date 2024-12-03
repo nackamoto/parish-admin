@@ -15,4 +15,14 @@ export const AuthServices = {
       data,
     } as ServicesType<TData>;
   },
+  SetPassword: <TData>(id: string, token: string, data: TData) => {
+    return {
+      method: "POST",
+      url: `/users/${id}/set-password/`,
+      data,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    } as ServicesType<TData>;
+  },
 } as const;
