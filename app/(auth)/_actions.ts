@@ -8,10 +8,13 @@ import { query } from "../_axios";
 import { AuthServices } from "./_services";
 import { ForgotPasswordSchemaType } from "./forgot-password/components/forgot-password";
 import { LoginSchemaType } from "./login/components/login-form";
-import { TErrorForgotPassword, TSuccessForgotPassword } from "./login/_types";
+import { TErrorForgotPassword } from "./login/_types";
 import { redirect } from "next/navigation";
 import { VerifyOTPType } from "./verify-otp/components/verify-otp";
 import { isRedirectError } from "next/dist/client/components/redirect";
+import { encrypt } from "@/lib/utils";
+import { SetPasswordSchemaType } from "./reset-password/_components/reset-password-form";
+import { OTPResponse } from "./_types";
 
 export const authSignIn = async (credentials: LoginSchemaType) => {
   try {
@@ -59,21 +62,20 @@ export const authForgotPassword = async (
 ) => {
   if (!credentials) throw new Error("No credentials provided");
   try {
-    const response = await query<TSuccessForgotPassword, TErrorForgotPassword>(
+    const response = await query<TErrorForgotPassword>(
       AuthServices.ForgotPassword(credentials)
     );
-    if (response.success) {
-      return redirect(
-        `/verify-otp?credentials=${credentials.email_or_phone_number}`
-      );
+    if (response.hasOwnProperty("status")) {
+      // If the response was successful, redirect to the verify OTP page. Also we want to add a fake otp creation as a param.
+      const otpCreationDate = encrypt(Date.now());
+      const uid = encrypt(credentials.email_or_phone_number);
+      return redirect(`/verify-otp?uid=${uid}&tid=${otpCreationDate}`);
     }
 
     // Know we know that the response was not successful, so destructure the response and get the message
-    const data = response as TErrorForgotPassword;
-
     return {
       success: false,
-      message: data?.email_or_phone_number?.invalid_email_or_phone,
+      message: response?.email_or_phone_number?.invalid_email_or_phone,
     };
   } catch (error) {
     if (isRedirectError(error)) {
@@ -84,12 +86,46 @@ export const authForgotPassword = async (
 
 export const authVerifyOTP = async (credentials: VerifyOTPType) => {
   try {
-    await query(AuthServices.VerifyOTP(credentials));
+    const response = await query<OTPResponse, OTPResponse>(
+      AuthServices.VerifyOTP(credentials)
+    );
+    if (response.hasOwnProperty("user_id")) {
+      const uuid = encrypt(response.user_id);
+      const token = encrypt(response.tokens.access);
+      return redirect(`/reset-password?uid=${uuid}&tid=${token}`);
+    }
     return {
-      success: true,
-      message: "OTP verification successful",
+      success: false,
+      message: "Invalid OTP",
     };
-  } catch {
+  } catch (error) {
+    if (isRedirectError(error)) {
+      throw error;
+    }
+    return {
+      success: false,
+      message: "An unknown error occurred, try again",
+    };
+  }
+};
+export const authSetPassword = async (
+  id: string,
+  token: string,
+  credentials: SetPasswordSchemaType
+) => {
+  try {
+    const response = await query<Record<string, string>>(
+      AuthServices.SetPassword(id, token, credentials)
+    );
+    if (response.hasOwnProperty("message")) {
+      return redirect("/login");
+    }
+
+    // return redirect("/login");
+  } catch (error) {
+    if (isRedirectError(error)) {
+      throw error;
+    }
     return {
       success: false,
       message: "An unknown error occurred, try again",
