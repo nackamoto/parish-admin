@@ -17,8 +17,8 @@ import { useForm } from "react-hook-form";
 import FormInput from "../../../../components/form/form-input";
 import { Form } from "../../../../components/ui/form";
 import { authSignIn } from "../../_actions";
-import { ToastAlert } from "@/components/dialog/alert";
 import { useState } from "react";
+import ToastAuthStatus from "../../_components/toast-alert";
 
 export function LoginForm() {
   const form = useForm<LoginSchemaType>({
@@ -44,9 +44,11 @@ export function LoginForm() {
       <form onSubmit={form.handleSubmit(handleSubmit)}>
         <Card className="mx-auto min-w-96 p-2">
           {authResponse && (
-            <DisplayLoginStatus
+            <ToastAuthStatus
               success={authResponse.success}
               message={authResponse.message}
+              title="Login"
+              variant={authResponse.success ? "success" : "destructive"}
             />
           )}
           <CardHeader>
@@ -93,31 +95,6 @@ export function LoginForm() {
         </Card>
       </form>
     </Form>
-  );
-}
-
-function DisplayLoginStatus({
-  success,
-  message,
-}: {
-  success: boolean;
-  message: string;
-}) {
-  if (success) {
-    return (
-      <ToastAlert
-        title={`Signin successful`}
-        variant={"default"}
-        description={message}
-      />
-    );
-  }
-  return (
-    <ToastAlert
-      title={`Signin failed`}
-      variant={"default"}
-      description={message}
-    />
   );
 }
 
