@@ -1,10 +1,10 @@
-import { AxiosHeaders } from "axios";
+import { AxiosRequestHeaders } from "axios";
 
 type ServicesType<SData = unknown> = {
   method: `GET` | `POST` | `PUT` | `DELETE`;
   url: string;
   data?: SData;
-  headers?: AxiosHeaders;
+  headers?: AxiosRequestHeaders;
 };
 
 type SuccessResponseType<Data = unknown> = {
