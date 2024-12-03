@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { LucideLayoutDashboard, Settings2 } from "lucide-react";
+import { LucideLayoutDashboard } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
 import { NavUser } from "@/components/nav-user";
@@ -31,23 +31,8 @@ const data = {
           url: "#",
         },
         {
-          title: "Starred",
-          url: "#",
-        },
-        {
           title: "Settings",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
+          url: "/settings",
         },
       ],
     },
