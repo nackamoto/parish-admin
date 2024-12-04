@@ -3,10 +3,10 @@
 import { auth } from "@/auth";
 import { isRedirectError } from "next/dist/client/components/redirect";
 import { redirect } from "next/navigation";
-import { query } from "../../_axios";
-import { ResetPasswordSchemaType } from "./account/_components/reset-password";
+import { query } from "../_axios";
+import { ResetPasswordSchemaType } from "./settings/account/_components/reset-password";
 import { UserServices } from "./_services";
-import type { ResetPasswordErrorType } from "./_types";
+import type { ResetPasswordErrorType } from "./settings/_types";
 
 export const userResetPassword = async (data: ResetPasswordSchemaType) => {
   const session = await auth();
