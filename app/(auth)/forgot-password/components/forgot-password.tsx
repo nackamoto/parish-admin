@@ -20,6 +20,7 @@ import { authForgotPassword } from "../../_actions";
 import { ToastAlert } from "@/app/components/dialog/alert";
 import { useState } from "react";
 import { Switch } from "@/app/components/ui/switch";
+import { Loader2 } from "lucide-react";
 
 export function ForgotPassword() {
   const form = useForm<UseHereOnly>({
@@ -88,8 +89,15 @@ export function ForgotPassword() {
                   />
                 )}
               </div>
-              <Button type="submit" className="w-full">
+              <Button
+                type="submit"
+                className="w-full flex items-center space-x-2 disabled:opacity-50"
+                disabled={form.formState.isSubmitting}
+              >
                 Send me OTP
+                {form.formState.isSubmitting && (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                )}
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">

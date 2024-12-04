@@ -92,7 +92,7 @@ export const authVerifyOTP = async (credentials: VerifyOTPType) => {
     if (response.hasOwnProperty("user_id")) {
       const uuid = encrypt(response.user_id);
       const token = encrypt(response.tokens.access);
-      return redirect(`/reset-password?uid=${uuid}&tid=${token}`);
+      return redirect(`/set-password?uid=${uuid}&tid=${token}`);
     }
     return {
       success: false,

@@ -89,7 +89,7 @@ export function LoginForm() {
               >
                 <p>Sign in</p>
                 {form.formState.isSubmitting && (
-                  <LucideLoader className="w-6 h-6" />
+                  <LucideLoader className="w-6 h-6 animate-spin" />
                 )}
               </Button>
             </div>

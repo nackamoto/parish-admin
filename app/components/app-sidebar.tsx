@@ -22,13 +22,13 @@ const data = {
   navMain: [
     {
       title: "Dashboard",
-      url: "#",
+      url: "/",
       icon: LucideLayoutDashboard,
       isActive: true,
       items: [
         {
           title: "Overview",
-          url: "#",
+          url: "/",
         },
         {
           title: "Settings",
