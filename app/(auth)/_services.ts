@@ -15,6 +15,13 @@ export const AuthServices = {
       data,
     } as ServicesType<TData>;
   },
+  ResendOTP: <TData>(data: TData) => {
+    return {
+      method: "POST",
+      url: `/users/resend-otp/`,
+      data,
+    } as ServicesType<TData>;
+  },
   SetPassword: <TData>(id: string, token: string, data: TData) => {
     return {
       method: "POST",
@@ -23,13 +30,6 @@ export const AuthServices = {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    } as ServicesType<TData>;
-  },
-  ResendOTP: <TData>(data: TData) => {
-    return {
-      method: "POST",
-      url: `/users/resend-otp/`,
-      data,
     } as ServicesType<TData>;
   },
 } as const;

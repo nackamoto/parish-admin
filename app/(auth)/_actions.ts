@@ -108,28 +108,6 @@ export const authVerifyOTP = async (credentials: VerifyOTPType) => {
     };
   }
 };
-export const authSetPassword = async (
-  id: string,
-  token: string,
-  credentials: SetPasswordSchemaType
-) => {
-  try {
-    const response = await query<Record<string, string>>(
-      AuthServices.SetPassword(id, token, credentials)
-    );
-    if (response.hasOwnProperty("message")) {
-      return redirect(`/login?success=true`);
-    }
-  } catch (error) {
-    if (isRedirectError(error)) {
-      throw error;
-    }
-    return {
-      success: false,
-      message: "An unknown error occurred, try again",
-    };
-  }
-};
 
 export const authResendOTP = async (credentials: { phone_number: string }) => {
   try {
@@ -158,6 +136,28 @@ export const authResendOTP = async (credentials: { phone_number: string }) => {
       success: false,
       message: "An unknown error occurred, try again",
     };
+  } catch (error) {
+    if (isRedirectError(error)) {
+      throw error;
+    }
+    return {
+      success: false,
+      message: "An unknown error occurred, try again",
+    };
+  }
+};
+export const authSetPassword = async (
+  id: string,
+  token: string,
+  credentials: SetPasswordSchemaType
+) => {
+  try {
+    const response = await query<Record<string, string>>(
+      AuthServices.SetPassword(id, token, credentials)
+    );
+    if (response.hasOwnProperty("message")) {
+      return redirect(`/login?success=true`);
+    }
   } catch (error) {
     if (isRedirectError(error)) {
       throw error;
