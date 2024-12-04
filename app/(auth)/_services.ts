@@ -25,4 +25,11 @@ export const AuthServices = {
       },
     } as ServicesType<TData>;
   },
+  ResendOTP: <TData>(data: TData) => {
+    return {
+      method: "POST",
+      url: `/users/resend-otp/`,
+      data,
+    } as ServicesType<TData>;
+  },
 } as const;
