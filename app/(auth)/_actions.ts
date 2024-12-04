@@ -13,7 +13,7 @@ import { redirect } from "next/navigation";
 import { VerifyOTPType } from "./verify-otp/components/verify-otp";
 import { isRedirectError } from "next/dist/client/components/redirect";
 import { encrypt } from "@/lib/utils";
-import { SetPasswordSchemaType } from "./reset-password/_components/reset-password-form";
+import { SetPasswordSchemaType } from "./set-password/_components/reset-password-form";
 import { OTPResponse } from "./_types";
 
 export const authSignIn = async (credentials: LoginSchemaType) => {

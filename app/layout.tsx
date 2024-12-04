@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import NextAuthSessionProvider from "@/app/components/session-provider";
 import QueryProviders from "@/app/components/query-provider";
+import AppLayout from "./components/app-layout";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -31,7 +32,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <NextAuthSessionProvider>
-          <QueryProviders>{children}</QueryProviders>
+          <QueryProviders>
+            <AppLayout>{children}</AppLayout>
+          </QueryProviders>
         </NextAuthSessionProvider>
       </body>
     </html>
