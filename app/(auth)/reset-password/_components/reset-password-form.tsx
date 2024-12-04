@@ -54,8 +54,7 @@ export function ResetPasswordForm() {
   async function onSubmit(data: SetPasswordSchemaType) {
     const toUidJson = decryptedUid;
     const toTidJson = decryptedTid;
-    const response = await authSetPassword(toUidJson, toTidJson, data);
-    // setResponse(response);
+    await authSetPassword(toUidJson, toTidJson, data);
   }
 
   return (

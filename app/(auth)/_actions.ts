@@ -120,8 +120,6 @@ export const authSetPassword = async (
     if (response.hasOwnProperty("message")) {
       return redirect(`/login?success=true`);
     }
-
-    // return redirect("/login");
   } catch (error) {
     if (isRedirectError(error)) {
       throw error;
