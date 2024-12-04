@@ -1,6 +1,9 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
+import ResendOTP from "./resend-otp";
 
 export function OTPTimer({ otpGeneratedAt }: { otpGeneratedAt: string }) {
+  const MemoizedResendOTP = useMemo(() => <ResendOTP />, []);
+
   const otpDuration = 5 * 60 * 1000;
   const otpExpiresTime = Number(otpGeneratedAt) + otpDuration;
 
@@ -38,17 +41,5 @@ export function OTPTimer({ otpGeneratedAt }: { otpGeneratedAt: string }) {
       </p>
     );
   }
-  return (
-    <div className="flex space-x-2 items-center">
-      <p className="text-sm">OTP expired, </p>
-      <button
-        className="text-sm font-semibold text-blue-600 underline"
-        onClick={() => {
-          // resend OTP
-        }}
-      >
-        Resend OTP
-      </button>
-    </div>
-  );
+  return <>{MemoizedResendOTP}</>;
 }

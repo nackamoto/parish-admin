@@ -37,10 +37,7 @@ export function ForgotPassword() {
   const [phoneMode, setMode] = useState<boolean>(true);
 
   const handleForgotPassword = async (data: UseHereOnly) => {
-    console.log("data", data);
-
     const response = await authForgotPassword(data);
-    console.log("response", response);
     setResponse(response);
   };
 
@@ -96,7 +93,7 @@ export function ForgotPassword() {
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">
-              {`Already have an account ? `}
+              {`Remembered password ? `}
               <Link href="/login" className="underline">
                 Sign in
               </Link>

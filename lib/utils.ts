@@ -27,5 +27,5 @@ export function decrypt<T>(value: T) {
     process.env.NEXT_PUBLIC_ENCRYPT_SECRET
   );
   const decryptedData = bytes.toString(CryptoJS.enc.Utf8);
-  return decryptedData;
+  return JSON.parse(decryptedData);
 }

@@ -118,10 +118,46 @@ export const authSetPassword = async (
       AuthServices.SetPassword(id, token, credentials)
     );
     if (response.hasOwnProperty("message")) {
-      return redirect("/login");
+      return redirect(`/login?success=true`);
     }
+  } catch (error) {
+    if (isRedirectError(error)) {
+      throw error;
+    }
+    return {
+      success: false,
+      message: "An unknown error occurred, try again",
+    };
+  }
+};
 
-    // return redirect("/login");
+export const authResendOTP = async (credentials: { phone_number: string }) => {
+  try {
+    const response = await query<Record<string, string>>(
+      AuthServices.ResendOTP(credentials)
+    );
+    if (response.hasOwnProperty("status")) {
+      const uid = encrypt(credentials.phone_number);
+      const tid = encrypt(Date.now());
+      return redirect(`/verify-otp?uid=${uid}&tid=${tid}&resend=true`);
+    }
+    if (response.hasOwnProperty("phone_number")) {
+      if (response.phone_number.hasOwnProperty("otp_exists")) {
+        const message = Object.values(response.phone_number).join(" ");
+        return {
+          success: false,
+          message,
+        };
+      }
+      return {
+        success: false,
+        message: `Enter a valid phone number`,
+      };
+    }
+    return {
+      success: false,
+      message: "An unknown error occurred, try again",
+    };
   } catch (error) {
     if (isRedirectError(error)) {
       throw error;

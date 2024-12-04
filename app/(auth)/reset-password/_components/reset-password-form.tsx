@@ -42,11 +42,6 @@ export function ResetPasswordForm() {
 
   const queryParams = useSearchParams();
 
-  //   const [authResponse, setResponse] = useState<{
-  //     success: boolean;
-  //     message: string;
-  //   }>();
-
   const uid = queryParams.get("uid");
   const tid = queryParams.get("tid");
 
@@ -57,23 +52,13 @@ export function ResetPasswordForm() {
   const decryptedTid = decrypt(parseTid);
 
   async function onSubmit(data: SetPasswordSchemaType) {
-    const toUidJson = JSON.parse(decryptedUid);
-    const toTidJson = JSON.parse(decryptedTid);
-    const response = await authSetPassword(toUidJson, toTidJson, data);
-    console.log("server response", response);
-    // setResponse(response);
+    const toUidJson = decryptedUid;
+    const toTidJson = decryptedTid;
+    await authSetPassword(toUidJson, toTidJson, data);
   }
 
   return (
     <Card className="mx-auto min-w-96 p-2">
-      {/* {authResponse && (
-        <ToastAuthStatus
-          success={authResponse.success}
-          message={authResponse.message}
-          title="OTP Verification"
-          variant={authResponse.success ? "success" : "destructive"}
-        />
-      )} */}
       <CardHeader>
         <CardTitle className="text-2xl">Set new password</CardTitle>
         <CardDescription>Enter your new password below.</CardDescription>
@@ -163,7 +148,7 @@ export function ResetPasswordForm() {
               {form.formState.isSubmitting && (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               )}
-              SetReset Password
+              Reset Password
             </Button>
           </form>
         </Form>
@@ -174,13 +159,11 @@ export function ResetPasswordForm() {
 
 export const SetPasswordSchema = z
   .object({
-    password: z
-      .string()
-      .min(8, "Password must be at least 8 characters long")
-      .regex(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-        "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character"
-      ),
+    password: z.string().min(8, "Password must be at least 8 characters long"),
+    // .regex(
+    //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&()"])[A-Za-z\d@$!%*?&()"]{8,}$/,
+    //   "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character"
+    // ),
     confirm_password: z.string(),
   })
   .refine((data) => data.password === data.confirm_password, {
