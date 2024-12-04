@@ -33,6 +33,7 @@ import ToastAuthStatus from "../../_components/toast-alert";
 import { decrypt } from "@/lib/utils";
 import { OTPTimer } from "./otp-timer";
 import { authVerifyOTP } from "../../_actions";
+import { LucideLoader } from "lucide-react";
 
 export function VerifyOTPForm() {
   const queryParams = useSearchParams();
@@ -52,6 +53,7 @@ export function VerifyOTPForm() {
 
   const uid = queryParams.get("uid");
   const tid = queryParams.get("tid");
+  const resend = Boolean(queryParams.get("resend"));
 
   const parseUid = uid?.replace(/ /g, "+").toString();
   const parseTid = tid?.replace(/ /g, "+").toString();
@@ -59,13 +61,8 @@ export function VerifyOTPForm() {
   const decryptedUid = decrypt(parseUid);
   const decryptedTid = decrypt(parseTid);
 
-  console.log("decryptedUid", decryptedUid);
-  console.log("decryptedTid", decryptedTid);
-
   const handleSubmit = async (data: VerifyOTPType) => {
-    console.log("otp code", data);
     const response = await authVerifyOTP(data);
-    console.log("verify otp response", response);
     setResponse(response);
   };
 
@@ -79,6 +76,14 @@ export function VerifyOTPForm() {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)}>
         <Card className="mx-auto min-w-96 p-2">
+          {resend && (
+            <ToastAuthStatus
+              success={resend}
+              message={`A new OTP has been sent to ${decryptedUid}, check and enter the OTP`}
+              title="OTP Code was Resent"
+              variant={`success`}
+            />
+          )}
           {authResponse && (
             <ToastAuthStatus
               success={authResponse.success}
@@ -87,10 +92,13 @@ export function VerifyOTPForm() {
               variant={authResponse.success ? "success" : "destructive"}
             />
           )}
+
           <CardHeader>
             <CardTitle className="text-2xl">Verify OTP</CardTitle>
             <CardDescription>
-              {`OTP sent to ${decryptedUid}, if your phone or email is correct, you will receive an OTP shortly`}
+              OTP sent to{" "}
+              <u className="font-bold text-md text-blue-600">{decryptedUid}</u>,
+              if your phone or email is correct, you will receive an OTP shortly
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -124,12 +132,19 @@ export function VerifyOTPForm() {
                   </FormItem>
                 )}
               />
+
               <div className="flex justify-end">
                 <OTPTimer otpGeneratedAt={decryptedTid} />
               </div>
-
-              <Button type="submit" className="w-full">
-                Verify
+              <Button
+                type="submit"
+                disabled={form.formState.isSubmitting}
+                className="w-full flex space-x-2 items-center disabled:opacity-50"
+              >
+                <p>Verify OTP</p>
+                {form.formState.isSubmitting && (
+                  <LucideLoader className="w-6 h-6" />
+                )}
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">

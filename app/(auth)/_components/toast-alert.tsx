@@ -10,15 +10,6 @@ type ToastAuthStatusProps = {
 };
 
 export default function ToastAuthStatus(props: ToastAuthStatusProps) {
-  if (props.success) {
-    return (
-      <ToastAlert
-        title={props.title}
-        variant={props.variant}
-        description={props.message}
-      />
-    );
-  }
   return (
     <ToastAlert
       title={props.title}

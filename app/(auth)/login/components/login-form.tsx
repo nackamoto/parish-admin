@@ -19,6 +19,7 @@ import { Form } from "../../../../components/ui/form";
 import { authSignIn } from "../../_actions";
 import { useState } from "react";
 import ToastAuthStatus from "../../_components/toast-alert";
+import { LucideLoader } from "lucide-react";
 
 export function LoginForm() {
   const form = useForm<LoginSchemaType>({
@@ -52,7 +53,7 @@ export function LoginForm() {
             />
           )}
           <CardHeader>
-            <CardTitle className="text-2xl">Login</CardTitle>
+            <CardTitle className="text-2xl">Sign in to Parish</CardTitle>
             <CardDescription>
               Enter phone number and password to login
             </CardDescription>
@@ -81,15 +82,16 @@ export function LoginForm() {
                   placeholder="Enter your phone number"
                 />
               </div>
-              <Button type="submit" className="w-full">
-                Login
+              <Button
+                disabled={form.formState.isSubmitting}
+                type="submit"
+                className="w-full flex space-x-2 items-center disabled:opacity-50"
+              >
+                <p>Sign in</p>
+                {form.formState.isSubmitting && (
+                  <LucideLoader className="w-6 h-6" />
+                )}
               </Button>
-            </div>
-            <div className="mt-4 text-center text-sm">
-              {`Don't have an account?`}
-              <Link href="#" className="underline">
-                Sign up
-              </Link>
             </div>
           </CardContent>
         </Card>
