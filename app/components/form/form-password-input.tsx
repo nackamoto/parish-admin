@@ -26,7 +26,7 @@ export default function FormPasswordInput<T extends FieldValues>(
       return (
         <>
           <EyeOff
-            className="h-4 w-4 absolute right-3 ml-4 top-1/2"
+            className="h-5 w-5 text-neutral-600 absolute right-3 ml-4 -mt-8"
             onClick={() => setVisible(false)}
           />
           <span className="sr-only">Hide password</span>
@@ -36,7 +36,7 @@ export default function FormPasswordInput<T extends FieldValues>(
     return (
       <>
         <Eye
-          className="h-4 w-4 absolute right-3 ml-4 top-1/2"
+          className="h-5 w-5 text-neutral-600 absolute right-3 ml-4 -mt-8"
           onClick={() => setVisible(true)}
         />
         <span className="sr-only">Show password</span>
@@ -50,10 +50,10 @@ export default function FormPasswordInput<T extends FieldValues>(
       disabled={props.disabled}
       name={props.name}
       render={({ field }) => (
-        <FormItem className={cx(`relative`, props.formItemClassname)}>
+        <FormItem className={cx(``, props.formItemClassname)}>
           <FormLabel className="">{props.label}</FormLabel>
           <FormControl className="placeholder-zinc-500">
-            <>
+            <div className="relative">
               <Input
                 className={cn("h-12 rounded-md", props.className || "")}
                 {...props}
@@ -61,7 +61,7 @@ export default function FormPasswordInput<T extends FieldValues>(
                 type={visible ? "text" : "password"}
               />
               {Visibility}
-            </>
+            </div>
           </FormControl>
           <FormMessage />
         </FormItem>

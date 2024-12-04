@@ -33,6 +33,9 @@ export function AccountResetPassword() {
         "aria-label": "Password Reset",
         variant: response.success ? "success" : "destructive",
       });
+      if (response.success) {
+        form.reset();
+      }
     }
   }
 
@@ -78,21 +81,22 @@ export function AccountResetPassword() {
   );
 }
 
-export const ResetPasswordSchema = z.object({
-  old_password: z
-    .string()
-    .min(8, "Password must be at least 8 characters long"),
-  // .regex(
-  //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&()"])[A-Za-z\d@$!%*?&()"]{8,}$/,
-  //   "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character"
-  // ),
-  new_password: z
-    .string()
-    .min(8, "Password must be at least 8 characters long"),
-  confirm_password: z.string(),
-});
-// .refine((data) => data.new_password === data.confirm_password, {
-//   message: "Passwords don't match",
-//   path: ["confirm_password"],
-// });
+export const ResetPasswordSchema = z
+  .object({
+    old_password: z
+      .string()
+      .min(8, "Password must be at least 8 characters long")
+      .regex(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&()"])[A-Za-z\d@$!%*?&()"]{8,}$/,
+        "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character"
+      ),
+    new_password: z
+      .string()
+      .min(8, "Password must be at least 8 characters long"),
+    confirm_password: z.string(),
+  })
+  .refine((data) => data.new_password === data.confirm_password, {
+    message: "Passwords don't match",
+    path: ["confirm_password"],
+  });
 export type ResetPasswordSchemaType = z.infer<typeof ResetPasswordSchema>;
