@@ -8,7 +8,7 @@ import { Loader2 } from "lucide-react";
 import { Button } from "@/app/components/ui/button";
 import { Form } from "@/app/components/ui/form";
 import FormPasswordInput from "@/app/components/form/form-password-input";
-import { userResetPassword } from "@/app/(settings)/_actions";
+import { userResetPassword } from "@/app/(dashboard)/settings/_actions";
 import { useToast } from "@/hooks/use-toast";
 // import ToastAuthStatus from "../../_components/toast-alert";
 

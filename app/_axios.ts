@@ -25,9 +25,11 @@ const _axios_base = async (config: ServicesType) => {
 export const query = async <S, E = never>(config: ServicesType) => {
   try {
     const response = await _axios_base(config);
+    console.log(JSON.stringify(response.data, null, 2));
     return response.data as S;
   } catch (error) {
     if (error instanceof AxiosError) {
+      console.log(JSON.stringify(error.response?.data, null, 2));
       return error.response?.data as E;
     }
     throw error;
