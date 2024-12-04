@@ -5,7 +5,7 @@ import {
   AlertDescription,
   AlertTitle,
   alertVariants,
-} from "@/components/ui/alert";
+} from "@/app/components/ui/alert";
 import { VariantProps } from "class-variance-authority";
 import { LucideTriangleAlert } from "lucide-react";
 

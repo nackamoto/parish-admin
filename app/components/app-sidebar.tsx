@@ -3,14 +3,14 @@
 import * as React from "react";
 import { LucideLayoutDashboard } from "lucide-react";
 
-import { NavMain } from "@/components/nav-main";
-import { NavUser } from "@/components/nav-user";
+import { NavMain } from "@/app/components/nav-main";
+import { NavUser } from "@/app/components/nav-user";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarRail,
-} from "@/components/ui/sidebar";
+} from "@/app/components/ui/sidebar";
 
 const data = {
   user: {

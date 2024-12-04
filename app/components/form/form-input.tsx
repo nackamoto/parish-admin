@@ -5,11 +5,11 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
+} from "@/app/components/ui/form";
 
-import { Input } from "@/components/ui/input";
+import { Input } from "@/app/components/ui/input";
 import { cn } from "@/lib/utils";
-import { FormInputProps } from "@/components/form/types";
+import { FormInputProps } from "@/app/components/form/types";
 
 export default function FormInput<T extends FieldValues>(
   props: FormInputProps<T>

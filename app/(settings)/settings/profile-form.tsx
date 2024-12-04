@@ -7,7 +7,7 @@ import { z } from "zod";
 
 import { cn } from "@/lib/utils";
 import { toast } from "@/hooks/use-toast";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/app/components/ui/button";
 import {
   Form,
   FormControl,
@@ -16,16 +16,16 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+} from "@/app/components/ui/form";
+import { Input } from "@/app/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
+} from "@/app/components/ui/select";
+import { Textarea } from "@/app/components/ui/textarea";
 
 const profileFormSchema = z.object({
   username: z

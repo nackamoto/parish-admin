@@ -1,5 +1,5 @@
-import { ToastAlert } from "@/components/dialog/alert";
-import { alertVariants } from "@/components/ui/alert";
+import { ToastAlert } from "@/app/components/dialog/alert";
+import { alertVariants } from "@/app/components/ui/alert";
 import { VariantProps } from "class-variance-authority";
 
 type ToastAuthStatusProps = {

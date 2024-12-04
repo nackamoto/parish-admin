@@ -2,20 +2,20 @@
 
 import Link from "next/link";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/app/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
+} from "@/app/components/ui/card";
+import { Label } from "@/app/components/ui/label";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import FormInput from "../../../../components/form/form-input";
-import { Form } from "../../../../components/ui/form";
+import FormInput from "../../../components/form/form-input";
+import { Form } from "../../../components/ui/form";
 import { authSignIn } from "../../_actions";
 import { useState } from "react";
 import ToastAuthStatus from "../../_components/toast-alert";

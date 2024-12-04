@@ -7,7 +7,7 @@ import { z } from "zod";
 
 import { cn } from "@/lib/utils";
 import { toast } from "@/hooks/use-toast";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/app/components/ui/button";
 import {
   Form,
   FormControl,
@@ -16,8 +16,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+} from "@/app/components/ui/form";
+import { RadioGroup, RadioGroupItem } from "@/app/components/ui/radio-group";
 
 const appearanceFormSchema = z.object({
   theme: z.enum(["light", "dark"], {
