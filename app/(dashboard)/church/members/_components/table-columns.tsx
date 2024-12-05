@@ -4,9 +4,27 @@ import { Member } from "@/app/(dashboard)/_types";
 import { DataTableColumnHeader } from "@/app/components/data-table/data-table-column-header";
 import { SideDrawer } from "@/app/components/dialog/side-drawer";
 import { Checkbox } from "@/app/components/ui/checkbox";
-import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/app/components/ui/dropdown-menu";
+import { Cross2Icon, DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { ColumnDef } from "@tanstack/react-table";
-import { Badge } from "lucide-react";
+import { Edit3, LucideDelete, LucideView } from "lucide-react";
+import { Button } from "@/app/components/ui/button";
+import { DialogModal } from "@/app/components/dialog/dialog-modal";
+import { ViewUserDetails } from "./user-details";
+import {
+  SheetTrigger,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+  Sheet,
+} from "@/components/ui/sheet";
+import { Separator } from "@/app/components/ui/separator";
 
 export const MembersTableColumns: ColumnDef<Member>[] = [
   {
@@ -125,21 +143,35 @@ export const MembersTableColumns: ColumnDef<Member>[] = [
         className="text-right"
       />
     ),
-    cell: function Cell({}) {
+    cell: function Cell({ column, row }) {
       return (
-        <>
-          <div className="flex space-x-2 items-center justify-end">
-            {/* <SideDrawer
-              noHeader
-              hasTrigger
-              side={`right`}
-              SheetContent={<ViewPatientDetails />}
-              className="md:max-w-4xl border-2 border-_p-ocean-green rounded-l-xl"
-              SheetTrigger={<AppEditIcon onClick={undefined} />}
-            />
-            <AppDeleteIcon onClick={undefined} /> */}
-          </div>
-        </>
+        <div className="flex justify-center">
+          <DropdownMenu>
+            <DropdownMenuTrigger className="border-none focus:outline-none">
+              <Button
+                aria-label="Open menu"
+                variant="ghost"
+                className="flex size-8 p-0 data-[state=open]:bg-muted"
+              >
+                <DotsHorizontalIcon className="size-4" aria-hidden="true" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-40">
+              <DropdownMenuItem className="hover:bg-violet-200">
+                <LucideView className="mr-2 size-3" />
+                View
+              </DropdownMenuItem>
+              <DropdownMenuItem className="hover:bg-violet-200">
+                <Edit3 className="mr-2 size-3" />
+                Edit
+              </DropdownMenuItem>
+              <DropdownMenuItem className="hover:bg-violet-200">
+                <LucideDelete className="mr-2 size-3" />
+                Delete
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       );
     },
   },

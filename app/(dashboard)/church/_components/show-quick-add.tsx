@@ -1,4 +1,3 @@
-import { SheetContentWrapper } from "@/app/components/dialog/content.wrapper";
 import { SideDrawer } from "@/app/components/dialog/side-drawer";
 import {
   DropdownMenu,
@@ -8,6 +7,15 @@ import {
 import { ChevronDown, LucidePlus } from "lucide-react";
 import MembershipForm from "./membership-form";
 import { Button } from "@/app/components/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/app/components/ui/sheet";
+import { Separator } from "@/app/components/ui/separator";
 
 export const HeaderShowQuickAdd = () => {
   return (
@@ -28,23 +36,27 @@ export const HeaderShowQuickAdd = () => {
         forceMount
       >
         <ul className="flex flex-col space-y-2">
-          <li className="hover:bg-stone-100 px-2 w-full cursor-pointer">
-            <SideDrawer
-              noHeader
-              SheetTitle="Add Member"
-              SheetDescription="Add a new member to the church"
-              hasTrigger
-              side={`right`}
-              SheetContent={
-                <SheetContentWrapper
-                  title="Add member"
-                  description="Add a new member to the church"
-                  form={<MembershipForm />}
-                />
-              }
-              className="md:max-w-4xl border-2"
-              SheetTrigger={<div className="w-full">Member</div>}
-            />
+          <li className="hover:bg-stone-100  w-full cursor-pointer">
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button
+                  className="w-full font-medium text-sm text-blue-800"
+                  variant="outline"
+                >
+                  Add a new Member
+                </Button>
+              </SheetTrigger>
+              <SheetContent className="md:max-w-4xl border-2">
+                <SheetHeader className="pb-4">
+                  <SheetTitle>Add Member</SheetTitle>
+                  <SheetDescription>
+                    Add a new member to the church database, fill in the form
+                  </SheetDescription>
+                </SheetHeader>
+                <Separator className="mb-6" />
+                <MembershipForm />
+              </SheetContent>
+            </Sheet>
           </li>
         </ul>
       </DropdownMenuContent>

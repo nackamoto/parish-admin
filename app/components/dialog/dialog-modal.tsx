@@ -1,3 +1,5 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import * as Dialog from "@radix-ui/react-dialog";
 import { XIcon } from "lucide-react";
