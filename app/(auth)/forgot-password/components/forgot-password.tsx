@@ -2,24 +2,25 @@
 
 import Link from "next/link";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/app/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
+} from "@/app/components/ui/card";
+import { Label } from "@/app/components/ui/label";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import FormInput from "../../../../components/form/form-input";
-import { Form } from "../../../../components/ui/form";
+import FormInput from "../../../components/form/form-input";
+import { Form } from "../../../components/ui/form";
 import { authForgotPassword } from "../../_actions";
-import { ToastAlert } from "@/components/dialog/alert";
+import { ToastAlert } from "@/app/components/dialog/alert";
 import { useState } from "react";
-import { Switch } from "@/components/ui/switch";
+import { Switch } from "@/app/components/ui/switch";
+import { Loader2 } from "lucide-react";
 
 export function ForgotPassword() {
   const form = useForm<UseHereOnly>({
@@ -88,8 +89,15 @@ export function ForgotPassword() {
                   />
                 )}
               </div>
-              <Button type="submit" className="w-full">
+              <Button
+                type="submit"
+                className="w-full flex items-center space-x-2 disabled:opacity-50"
+                disabled={form.formState.isSubmitting}
+              >
                 Send me OTP
+                {form.formState.isSubmitting && (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                )}
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">

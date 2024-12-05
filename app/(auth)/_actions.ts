@@ -13,7 +13,7 @@ import { redirect } from "next/navigation";
 import { VerifyOTPType } from "./verify-otp/components/verify-otp";
 import { isRedirectError } from "next/dist/client/components/redirect";
 import { encrypt } from "@/lib/utils";
-import { SetPasswordSchemaType } from "./reset-password/_components/reset-password-form";
+import { SetPasswordSchemaType } from "./set-password/_components/set-password-form";
 import { OTPResponse } from "./_types";
 
 export const authSignIn = async (credentials: LoginSchemaType) => {
@@ -92,34 +92,12 @@ export const authVerifyOTP = async (credentials: VerifyOTPType) => {
     if (response.hasOwnProperty("user_id")) {
       const uuid = encrypt(response.user_id);
       const token = encrypt(response.tokens.access);
-      return redirect(`/reset-password?uid=${uuid}&tid=${token}`);
+      return redirect(`/set-password?uid=${uuid}&tid=${token}`);
     }
     return {
       success: false,
       message: "Invalid OTP",
     };
-  } catch (error) {
-    if (isRedirectError(error)) {
-      throw error;
-    }
-    return {
-      success: false,
-      message: "An unknown error occurred, try again",
-    };
-  }
-};
-export const authSetPassword = async (
-  id: string,
-  token: string,
-  credentials: SetPasswordSchemaType
-) => {
-  try {
-    const response = await query<Record<string, string>>(
-      AuthServices.SetPassword(id, token, credentials)
-    );
-    if (response.hasOwnProperty("message")) {
-      return redirect(`/login?success=true`);
-    }
   } catch (error) {
     if (isRedirectError(error)) {
       throw error;
@@ -158,6 +136,28 @@ export const authResendOTP = async (credentials: { phone_number: string }) => {
       success: false,
       message: "An unknown error occurred, try again",
     };
+  } catch (error) {
+    if (isRedirectError(error)) {
+      throw error;
+    }
+    return {
+      success: false,
+      message: "An unknown error occurred, try again",
+    };
+  }
+};
+export const authSetPassword = async (
+  id: string,
+  token: string,
+  credentials: SetPasswordSchemaType
+) => {
+  try {
+    const response = await query<Record<string, string>>(
+      AuthServices.SetPassword(id, token, credentials)
+    );
+    if (response.hasOwnProperty("message")) {
+      return redirect(`/login?success=true`);
+    }
   } catch (error) {
     if (isRedirectError(error)) {
       throw error;
