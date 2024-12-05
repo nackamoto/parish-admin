@@ -59,8 +59,8 @@ const data = {
       isActive: true,
       items: [
         {
-          title: "Add Member",
-          url: "/church/add-member",
+          title: "Members",
+          url: "/church/members",
         },
       ],
     },

@@ -26,9 +26,11 @@ import { Switch } from "@/app/components/ui/switch";
 import { churchCreateMember } from "../_actions.church";
 import { useToast } from "@/hooks/use-toast";
 import FieldErrorsCard from "@/app/components/dialog/list.errors";
+import { useGetMembers } from "../../_hooks";
 
 export default function MembershipForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const members = useGetMembers();
 
   const form = useForm<MembershipformSchemaType>({
     resolver: zodResolver(MembershipformSchema),
@@ -61,6 +63,7 @@ export default function MembershipForm() {
         description: response?.message,
       });
       form.reset();
+      members.refetch();
     } else {
       toast({
         description: <FieldErrorsCard errors={response?.data} />,

@@ -74,7 +74,7 @@ interface EmergencyContact {
   other_phone: string | null;
 }
 
-interface Member {
+export interface Member {
   id: string;
   membership_number: string;
   user: string;
