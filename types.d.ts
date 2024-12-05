@@ -4,6 +4,7 @@ type ServicesType<SData = unknown> = {
   method: `GET` | `POST` | `PUT` | `DELETE`;
   url: string;
   data?: SData;
+  params?: Record<string, unknown>;
   headers?: AxiosRequestHeaders;
 };
 
