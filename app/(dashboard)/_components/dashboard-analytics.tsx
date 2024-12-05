@@ -23,13 +23,6 @@ const analyticsData: AnalyticsCardDataType[] = [
     statistics: <span>+5% from last week</span>,
     action: <button>View Details</button>,
   },
-  //   {
-  //     Icon: Users,
-  //     title: "Total Members",
-  //     value: 1500,
-  //     statistics: <span>+10% from last month</span>,
-  //     action: <button>View Details</button>,
-  //   },
   {
     Icon: Church,
     title: "Total Churches",

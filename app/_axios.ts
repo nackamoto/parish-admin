@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
 import { ServicesType } from "@/types";
+import { useQuery } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { useSession } from "next-auth/react";
 
@@ -39,17 +40,24 @@ export const query = async <S, E = never>(config: ServicesType) => {
   }
 };
 
-// user this with react query to client-side data fetching
-export const useFetcher = <TData>(url: string) => {
-  const { data } = useSession();
-
-  return fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`, {
-    method: `GET`,
-    headers: {
-      Authorization: `Bearer ${data?.user.tokens.access}`,
+export const useFetcher = <TData = never>(config: Partial<ServicesType>) => {
+  const { data, status } = useSession();
+  const isLoading = status === "loading";
+  return useQuery({
+    queryKey: [config.url],
+    enabled: !isLoading,
+    queryFn: async () => {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}${config.url}`,
+        {
+          method: config.method,
+          headers: {
+            Authorization: `Bearer ${data?.user?.tokens?.access}`,
+          },
+        }
+      );
+      const users = await response.json();
+      return users as TData;
     },
-  }).then((res) => {
-    const users = res.json();
-    return users as TData;
   });
 };
