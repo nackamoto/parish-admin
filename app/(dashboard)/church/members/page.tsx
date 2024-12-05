@@ -1,6 +1,7 @@
 import { Separator } from "@/app/components/ui/separator";
 import { SidebarTrigger } from "@/app/components/ui/sidebar";
 import { HeaderShowQuickAdd } from "../_components/show-quick-add";
+import { MembersTable } from "./members.table.";
 
 export default async function ChurchMembersPage() {
   return (
@@ -24,6 +25,9 @@ export default async function ChurchMembersPage() {
         </div>
         <Separator />
       </header>
+      <div className="flex flex-col flex-1">
+        <MembersTable />
+      </div>
     </main>
   );
 }
