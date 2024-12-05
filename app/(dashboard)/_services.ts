@@ -10,8 +10,14 @@ export const UserServices = {
   },
   GetAllUsers: <TData>() => {
     return {
-      method: "POST",
+      method: "GET",
       url: `/users/`,
+    } as ServicesType<TData>;
+  },
+  GetAllMembers: <TData>() => {
+    return {
+      method: "GET",
+      url: `/members/`,
     } as ServicesType<TData>;
   },
 } as const;
