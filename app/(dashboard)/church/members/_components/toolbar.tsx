@@ -1,14 +1,13 @@
 import { Input } from "@/app/components/ui/input";
 import { Cross2Icon } from "@radix-ui/react-icons";
-import { PlusIcon } from "lucide-react";
 import { forwardRef } from "react";
 import { Button } from "@/app/components/ui/button";
 import { ExtendDataTableProps } from "@/app/components/data-table/types";
-import { DialogModal } from "@/app/components/dialog/dialog-modal";
+import { Table } from "@tanstack/react-table";
 
 export interface MembersToolbarProps<TData>
   extends ExtendDataTableProps<TData> {
-  //   table: Table<TData>;
+  table: Table<TData>;
 }
 
 export type MembersTableMethods = {};

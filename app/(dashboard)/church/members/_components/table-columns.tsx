@@ -2,7 +2,6 @@
 
 import { Member } from "@/app/(dashboard)/_types";
 import { DataTableColumnHeader } from "@/app/components/data-table/data-table-column-header";
-import { SideDrawer } from "@/app/components/dialog/side-drawer";
 import { Checkbox } from "@/app/components/ui/checkbox";
 import {
   DropdownMenu,
@@ -10,21 +9,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/app/components/ui/dropdown-menu";
-import { Cross2Icon, DotsHorizontalIcon } from "@radix-ui/react-icons";
+import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { ColumnDef } from "@tanstack/react-table";
 import { Edit3, LucideDelete, LucideView } from "lucide-react";
 import { Button } from "@/app/components/ui/button";
-import { DialogModal } from "@/app/components/dialog/dialog-modal";
-import { ViewUserDetails } from "./user-details";
-import {
-  SheetTrigger,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetDescription,
-  Sheet,
-} from "@/components/ui/sheet";
-import { Separator } from "@/app/components/ui/separator";
 
 export const MembersTableColumns: ColumnDef<Member>[] = [
   {
@@ -143,7 +131,7 @@ export const MembersTableColumns: ColumnDef<Member>[] = [
         className="text-right"
       />
     ),
-    cell: function Cell({ column, row }) {
+    cell: function Cell({}) {
       return (
         <div className="flex justify-center">
           <DropdownMenu>

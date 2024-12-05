@@ -149,7 +149,7 @@ export function ViewUserDetails(user: Member) {
               <CardTitle>Occupation</CardTitle>
             </CardHeader>
             <CardContent className="grid gap-2">
-              {user?.occupations.map((occupation: any, index: number) => (
+              {user?.occupations.map((occupation) => (
                 <div
                   key={occupation.id}
                   className="border-t pt-2 first:border-t-0 first:pt-0"
@@ -157,12 +157,14 @@ export function ViewUserDetails(user: Member) {
                   <InfoItem
                     icon={Briefcase}
                     label="Job Title"
-                    value={occupation.job_title}
+                    // value={occupation?.job_title}
+                    value="N/A"
                   />
                   <InfoItem
                     icon={Briefcase}
                     label="Industry"
-                    value={occupation.industry}
+                    // value={occupation?.industry}
+                    value="N/A"
                   />
                   <InfoItem
                     icon={Briefcase}
@@ -220,31 +222,31 @@ export function ViewUserDetails(user: Member) {
               <CardTitle>Emergency Contacts</CardTitle>
             </CardHeader>
             <CardContent className="grid gap-4">
-              {user?.emergency_contacts.map((contact: any) => (
+              {user?.emergency_contacts.map((contact) => (
                 <div
-                  key={contact.id}
+                  key={contact?.id}
                   className="grid gap-2 border-t pt-2 first:border-t-0 first:pt-0"
                 >
                   <InfoItem
                     icon={User}
                     label="Name"
-                    value={`${contact.first_name} ${contact.last_name}`}
+                    value={`${contact?.first_name} ${contact?.last_name}`}
                   />
                   <InfoItem
                     icon={User}
                     label="Relationship"
-                    value={contact.relationship}
+                    value={contact?.relationship}
                   />
                   <InfoItem
                     icon={Phone}
                     label="Phone"
-                    value={contact.phone_number}
+                    value={contact?.phone_number}
                   />
-                  {contact.other_phone && (
+                  {contact?.other_phone && (
                     <InfoItem
                       icon={Phone}
                       label="Other Phone"
-                      value={contact.other_phone}
+                      value={contact?.other_phone}
                     />
                   )}
                 </div>
@@ -259,9 +261,9 @@ export function ViewUserDetails(user: Member) {
               <CardTitle>Family Members</CardTitle>
             </CardHeader>
             <CardContent className="grid gap-4">
-              {user?.family_members.map((member: any, index: number) => (
+              {user?.family_members.map((member) => (
                 <div
-                  key={index}
+                  key={member?.name}
                   className="grid gap-2 border-t pt-2 first:border-t-0 first:pt-0"
                 >
                   <InfoItem icon={User} label="Name" value={member.name} />
