@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export type ResetPasswordErrorType = {
   status: string;
   status_code: number;
@@ -120,3 +121,7 @@ export interface MembersResponse {
   message: string;
   data: MembersData;
 }
+
+export type FailedCreateMemberType = ResetPasswordErrorType & {
+  data: Array<any>;
+};

@@ -23,35 +23,15 @@ import {
   SelectValue,
 } from "@/app/components/ui/select";
 import { Switch } from "@/app/components/ui/switch";
-
-const formSchema = z.object({
-  membership_number: z.string().min(1, "Membership number is required"),
-  member_title: z.string().min(1, "Title is required"),
-  create_user: z.boolean(),
-  date_of_birth: z
-    .string()
-    .regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format. Use YYYY-MM-DD"),
-  email: z.string().email("Invalid email address").optional().or(z.literal("")),
-  first_name: z.string().min(1, "First name is required"),
-  last_name: z.string().min(1, "Last name is required"),
-  middle_name: z.string().optional(),
-  maiden_name: z.string().optional(),
-  gender: z.enum(["M", "F"], {
-    required_error: "Please select a gender",
-  }),
-  hometown: z.string().min(1, "Hometown is required"),
-  marital_status: z.string().min(1, "Marital status is required"),
-  nationality: z.string().min(1, "Nationality is required"),
-  other_phone_number: z.string().optional(),
-  phone_number: z.string().min(1, "Phone number is required"),
-  place_of_birth: z.string().min(1, "Place of birth is required"),
-});
+import { churchCreateMember } from "../_actions.church";
+import { useToast } from "@/hooks/use-toast";
+import FieldErrorsCard from "@/app/components/dialog/list.errors";
 
 export default function MembershipForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<MembershipformSchemaType>({
+    resolver: zodResolver(MembershipformSchema),
     defaultValues: {
       membership_number: "m00903838748j",
       member_title: "Miss.",
@@ -72,7 +52,21 @@ export default function MembershipForm() {
     },
   });
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  const { toast } = useToast();
+
+  async function onSubmit(values: MembershipformSchemaType) {
+    const response = await churchCreateMember(values);
+    if (response?.success) {
+      toast({
+        description: response?.message,
+      });
+      form.reset();
+    } else {
+      toast({
+        description: <FieldErrorsCard errors={response?.data} />,
+      });
+    }
+
     setIsSubmitting(true);
     // In a real application, you would send this data to your server
     console.log(values);
@@ -353,3 +347,27 @@ export default function MembershipForm() {
     </div>
   );
 }
+
+export const MembershipformSchema = z.object({
+  membership_number: z.string().min(1, "Membership number is required"),
+  member_title: z.string().min(1, "Title is required"),
+  create_user: z.boolean(),
+  date_of_birth: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format. Use YYYY-MM-DD"),
+  email: z.string().email("Invalid email address").optional().or(z.literal("")),
+  first_name: z.string().min(1, "First name is required"),
+  last_name: z.string().min(1, "Last name is required"),
+  middle_name: z.string().optional(),
+  maiden_name: z.string().optional(),
+  gender: z.enum(["M", "F"], {
+    required_error: "Please select a gender",
+  }),
+  hometown: z.string().min(1, "Hometown is required"),
+  marital_status: z.string().min(1, "Marital status is required"),
+  nationality: z.string().min(1, "Nationality is required"),
+  other_phone_number: z.string().optional(),
+  phone_number: z.string().min(1, "Phone number is required"),
+  place_of_birth: z.string().min(1, "Place of birth is required"),
+});
+export type MembershipformSchemaType = z.infer<typeof MembershipformSchema>;
