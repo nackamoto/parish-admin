@@ -1,19 +1,10 @@
 "use client";
 import { DataTable } from "@/app/components/data-table/data-table";
-import { useMemo, useRef } from "react";
-import {
-  MembersTableColumns,
-  useMembersTableColumns,
-} from "./_components/table-columns";
+import { useMemo } from "react";
+import { useMembersTableColumns } from "./_components/table-columns";
 import { useGetMembers } from "../../_hooks";
 import { DataTableSkeleton } from "@/app/components/data-table/data-table-skeleton";
 import { MembersToolbar } from "./_components/toolbar";
-import {
-  SideDrawer,
-  SideDrawerMethods,
-} from "@/app/components/dialog/side-drawer";
-import { ViewUserDetails } from "./_components/user-details";
-import MembershipForm from "../_components/membership-form";
 import { Member } from "../../_types";
 
 export function MembersTable() {
