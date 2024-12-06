@@ -75,7 +75,9 @@ export const MembersTableColumns: ColumnDef<Member>[] = [
       <DataTableColumnHeader column={column} title="Email" />
     ),
     cell: ({ row }) => {
-      return <div className="text-ellipsis">{`${row.original.email}`}</div>;
+      return (
+        <div className="text-ellipsis">{`${row.original.email || "N/A"}`}</div>
+      );
     },
   },
   {
