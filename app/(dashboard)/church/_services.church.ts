@@ -14,4 +14,17 @@ export const ChurchServices = {
       url: `/members/${id}/`,
     } as ServicesType<TData>;
   },
+  CreateMemberTitle: <TData>(data: TData) => {
+    return {
+      method: `POST`,
+      url: `/member-titles/`,
+      data,
+    } as ServicesType<TData>;
+  },
+  GetMemberTitles: <TData>() => {
+    return {
+      method: `GET`,
+      url: `/member-titles/`,
+    } as ServicesType<TData>;
+  },
 } as const;

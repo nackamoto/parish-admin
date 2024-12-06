@@ -5,6 +5,7 @@ import { ChurchServices } from "./_services.church";
 import { MembershipformSchemaType } from "./_components/membership-form";
 import { FailedCreateMemberType } from "../_types";
 import { isNativeError } from "util/types";
+import { MemberTitle } from "./_components/member-title";
 
 export const churchCreateMember = async (data: MembershipformSchemaType) => {
   try {
@@ -54,6 +55,36 @@ export const churchDeleteMember = async (id: string) => {
       return {
         success: false,
         message,
+      };
+    }
+  } catch (error) {
+    if (isNativeError(error)) {
+      return {
+        success: false,
+        message: error.message,
+      };
+    }
+  }
+};
+
+export const churchCreateMemberTitle = async (data: MemberTitle) => {
+  try {
+    const response = await query<FailedCreateMemberType>(
+      ChurchServices.CreateMemberTitle(data)
+    );
+    if (response.status_code === 200) {
+      return {
+        success: true,
+        message: response.message,
+        // data: response.data ,
+      };
+    }
+    if (response.hasOwnProperty("errors")) {
+      const errors = response.errors.detail;
+      return {
+        success: false,
+        message: response.message,
+        data: Object.values(errors).flat(),
       };
     }
   } catch (error) {

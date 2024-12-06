@@ -1,5 +1,5 @@
 interface ComponentProps {
-  errors?: string[];
+  errors?: string[] | undefined;
   icon?: React.ReactNode;
 }
 const defaultIcon = (

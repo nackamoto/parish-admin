@@ -1,8 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
-import { MembersResponse, UsersResponse } from "./_types";
+import {
+  GetBaseResponse,
+  MembersResponse,
+  MemberTitle,
+  UsersResponse,
+} from "./_types";
 import { useSession } from "next-auth/react";
 import { UserServices } from "./_services";
 import { useFetcher } from "../_axios";
+import { ChurchServices } from "./church/_services.church";
 
 export const useGetUsers = () => {
   return useFetcher<UsersResponse>(UserServices.GetAllUsers());
@@ -10,6 +16,12 @@ export const useGetUsers = () => {
 
 export const useGetMembers = () => {
   return useFetcher<MembersResponse>(UserServices.GetAllMembers());
+};
+
+export const useGetMemberTitles = () => {
+  return useFetcher<GetBaseResponse<MemberTitle[]>>(
+    ChurchServices.GetMemberTitles()
+  );
 };
 
 export const useGetChurches = () => {

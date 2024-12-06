@@ -7,11 +7,11 @@ import {
   FormMessage,
 } from "@/app/components/ui/form";
 
-import { Input } from "@/app/components/ui/input";
 import { cn } from "@/lib/utils";
 import { FormInputProps } from "@/app/components/form/types";
+import { PhoneInput } from "../common/phone-input";
 
-export default function FormInput<T extends FieldValues>(
+export default function FormPhoneInput<T extends FieldValues>(
   props: FormInputProps<T>
 ) {
   const { control } = useFormContext();
@@ -24,7 +24,9 @@ export default function FormInput<T extends FieldValues>(
         <FormItem className={props.formItemClassname}>
           <FormLabel className="">{props.label}</FormLabel>
           <FormControl className="placeholder-zinc-500">
-            <Input
+            <PhoneInput
+              defaultCountry="GH"
+              defaultChecked
               className={cn("rounded-md", props.className || "")}
               {...props}
               {...field}
