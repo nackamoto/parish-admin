@@ -43,6 +43,7 @@
     "react-day-picker": "^8.10.1",
     "react-dom": "19.0.0-rc-66855b96-20241106",
     "react-hook-form": "^7.53.2",
+    "react-phone-number-input": "^3.4.10",
     "recharts": "^2.14.1",
     "sonner": "^1.7.0",
     "tailwind-merge": "^2.5.5",
