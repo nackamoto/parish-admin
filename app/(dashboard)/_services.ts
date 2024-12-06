@@ -20,4 +20,10 @@ export const UserServices = {
       url: `/members/`,
     } as ServicesType<TData>;
   },
+  GetMember: <TData>(id: string) => {
+    return {
+      method: "GET",
+      url: `/members/${id}/`,
+    } as ServicesType<TData>;
+  },
 } as const;

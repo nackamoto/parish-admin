@@ -31,6 +31,8 @@ import { churchDeleteMember } from "../../_actions.church";
 import { ChurchServices } from "../../_services.church";
 import { useToast } from "@/hooks/use-toast";
 import { useGetMembers } from "@/app/(dashboard)/_hooks";
+import { usePathname, useRouter } from "next/navigation";
+import { encrypt } from "@/lib/utils";
 
 export const MembersTableColumns: ColumnDef<Member>[] = [
   {
@@ -187,6 +189,8 @@ export const MembersTableColumns: ColumnDef<Member>[] = [
 
 export const useMembersTableColumns = () => {
   const [isDeletePending, startDeleting] = useTransition();
+  const router = useRouter();
+  const pathname = usePathname();
   const { toast } = useToast();
   const members = useGetMembers();
 
@@ -216,7 +220,12 @@ export const useMembersTableColumns = () => {
 
             {isDeletePending ? "Deleting..." : "Delete"}
           </Button>
-          <Button variant="secondary">
+          <Button
+            variant="secondary"
+            onClick={() => {
+              router.push(`${pathname}/${user.id}/edit`);
+            }}
+          >
             <Edit3 className="mr-2 size-3" />
             Edit
           </Button>
