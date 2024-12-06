@@ -5,7 +5,6 @@ import { useMembersTableColumns } from "./_components/table-columns";
 import { useGetMembers } from "../../_hooks";
 import { DataTableSkeleton } from "@/app/components/data-table/data-table-skeleton";
 import { MembersToolbar } from "./_components/toolbar";
-import { Member } from "../../_types";
 
 export function MembersTable() {
   const memoizedTabletoolbar = useMemo(() => MembersToolbar, []);

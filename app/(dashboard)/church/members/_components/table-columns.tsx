@@ -19,20 +19,14 @@ import {
   LucideView,
 } from "lucide-react";
 import { Button } from "@/app/components/ui/button";
-import { MutableRefObject, RefObject, useRef, useTransition } from "react";
-import {
-  SideDrawer,
-  SideDrawerMethods,
-} from "@/app/components/dialog/side-drawer";
-import MembershipForm from "../../_components/membership-form";
+import { useTransition } from "react";
+import { SideDrawer } from "@/app/components/dialog/side-drawer";
 import { ViewUserDetails } from "./user-details";
 import { Separator } from "@/app/components/ui/separator";
 import { churchDeleteMember } from "../../_actions.church";
-import { ChurchServices } from "../../_services.church";
 import { useToast } from "@/hooks/use-toast";
 import { useGetMembers } from "@/app/(dashboard)/_hooks";
 import { usePathname, useRouter } from "next/navigation";
-import { encrypt } from "@/lib/utils";
 
 export const MembersTableColumns: ColumnDef<Member>[] = [
   {
