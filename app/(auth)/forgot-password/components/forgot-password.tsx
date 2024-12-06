@@ -21,6 +21,7 @@ import { ToastAlert } from "@/app/components/dialog/alert";
 import { useState } from "react";
 import { Switch } from "@/app/components/ui/switch";
 import { Loader2 } from "lucide-react";
+import FormPhoneInput from "@/app/components/form/form-phone-input";
 
 export function ForgotPassword() {
   const form = useForm<UseHereOnly>({
@@ -76,7 +77,7 @@ export function ForgotPassword() {
                   </div>
                 </section>
                 {phoneMode ? (
-                  <FormInput
+                  <FormPhoneInput
                     name="email_or_phone_number"
                     label="Phone Number"
                     placeholder="Enter your phone number"

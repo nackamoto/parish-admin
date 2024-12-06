@@ -27,6 +27,7 @@ import {
 import { authSetPassword } from "../../_actions";
 import { useSearchParams } from "next/navigation";
 import { decrypt } from "@/lib/utils";
+import FormPasswordInput from "@/app/components/form/form-password-input";
 
 export function ResetPasswordForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -66,7 +67,12 @@ export function ResetPasswordForm() {
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <FormField
+            <FormPasswordInput
+              name="password"
+              label="New Password"
+              placeholder="Enter your new password"
+            />
+            {/* <FormField
               control={form.control}
               name="password"
               render={({ field }) => (
@@ -100,8 +106,13 @@ export function ResetPasswordForm() {
                   <FormMessage />
                 </FormItem>
               )}
+            /> */}
+            <FormPasswordInput
+              name="confirm_password"
+              label="Confirm New Password"
+              placeholder="Enter your new password"
             />
-            <FormField
+            {/* <FormField
               control={form.control}
               name="confirm_password"
               render={({ field }) => (
@@ -139,7 +150,7 @@ export function ResetPasswordForm() {
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            /> */}
             <Button
               type="submit"
               className="w-full"
