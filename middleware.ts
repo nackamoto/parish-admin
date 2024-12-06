@@ -8,7 +8,7 @@ export default auth((req) => {
     if (publicRoutes.includes(req.nextUrl.pathname)) {
       return NextResponse.next();
     }
-    if (req.nextUrl.pathname === rootRoute) {
+    if (privateRoutes.includes(req.nextUrl.pathname)) {
       return NextResponse.redirect(new URL(`/login`, req.nextUrl));
     }
   }
@@ -23,4 +23,10 @@ export const config = {
 };
 
 const publicRoutes = [`/login`, `/signup`];
-const rootRoute = `/`;
+const privateRoutes = [
+  `/dashboard`,
+  `/settings`,
+  `/members`,
+  `/church/members`,
+  `/`,
+];
