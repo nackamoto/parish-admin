@@ -14,12 +14,13 @@ import { Label } from "@/app/components/ui/label";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import FormInput from "../../../components/form/form-input";
 import { Form } from "../../../components/ui/form";
 import { authSignIn } from "../../_actions";
 import { useState } from "react";
 import ToastAuthStatus from "../../_components/toast-alert";
 import { LucideLoader } from "lucide-react";
+import FormPhoneInput from "@/app/components/form/form-phone-input";
+import FormPasswordInput from "@/app/components/form/form-password-input";
 
 export function LoginForm() {
   const form = useForm<LoginSchemaType>({
@@ -59,14 +60,15 @@ export function LoginForm() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="grid gap-4">
-              <FormInput
+            <div className="grid gap-10">
+              <FormPhoneInput
                 name="phone_number"
                 label="Phone Number"
                 placeholder="Enter your phone number"
               />
+
               <div className="grid gap-2">
-                <FormInput
+                <FormPasswordInput
                   name="password"
                   label={
                     <div className="flex items-center">
@@ -79,7 +81,7 @@ export function LoginForm() {
                       </Link>
                     </div>
                   }
-                  placeholder="Enter your phone number"
+                  placeholder="Password"
                 />
               </div>
               <Button

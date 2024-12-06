@@ -1,21 +1,12 @@
 "use client";
 
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { Loader2, Eye, EyeOff } from "lucide-react";
+import { Loader2 } from "lucide-react";
 
 import { Button } from "@/app/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/app/components/ui/form";
-import { Input } from "@/app/components/ui/input";
+import { Form } from "@/app/components/ui/form";
 import {
   Card,
   CardHeader,
@@ -27,11 +18,9 @@ import {
 import { authSetPassword } from "../../_actions";
 import { useSearchParams } from "next/navigation";
 import { decrypt } from "@/lib/utils";
+import FormPasswordInput from "@/app/components/form/form-password-input";
 
 export function ResetPasswordForm() {
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
   const form = useForm<z.infer<typeof SetPasswordSchema>>({
     resolver: zodResolver(SetPasswordSchema),
     defaultValues: {
@@ -66,7 +55,12 @@ export function ResetPasswordForm() {
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <FormField
+            <FormPasswordInput
+              name="password"
+              label="New Password"
+              placeholder="Enter your new password"
+            />
+            {/* <FormField
               control={form.control}
               name="password"
               render={({ field }) => (
@@ -100,8 +94,13 @@ export function ResetPasswordForm() {
                   <FormMessage />
                 </FormItem>
               )}
+            /> */}
+            <FormPasswordInput
+              name="confirm_password"
+              label="Confirm New Password"
+              placeholder="Enter your new password"
             />
-            <FormField
+            {/* <FormField
               control={form.control}
               name="confirm_password"
               render={({ field }) => (
@@ -139,7 +138,7 @@ export function ResetPasswordForm() {
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            /> */}
             <Button
               type="submit"
               className="w-full"

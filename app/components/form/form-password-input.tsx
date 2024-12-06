@@ -55,7 +55,7 @@ export default function FormPasswordInput<T extends FieldValues>(
           <FormControl className="placeholder-zinc-500">
             <div className="relative">
               <Input
-                className={cn("h-12 rounded-md", props.className || "")}
+                className={cn("rounded-md", props.className || "")}
                 {...props}
                 {...field}
                 type={visible ? "text" : "password"}
