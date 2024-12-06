@@ -1,14 +1,25 @@
 "use client";
 import { DataTable } from "@/app/components/data-table/data-table";
-import { useMemo } from "react";
-import { MembersTableColumns } from "./_components/table-columns";
+import { useMemo, useRef } from "react";
+import {
+  MembersTableColumns,
+  useMembersTableColumns,
+} from "./_components/table-columns";
 import { useGetMembers } from "../../_hooks";
 import { DataTableSkeleton } from "@/app/components/data-table/data-table-skeleton";
 import { MembersToolbar } from "./_components/toolbar";
+import {
+  SideDrawer,
+  SideDrawerMethods,
+} from "@/app/components/dialog/side-drawer";
+import { ViewUserDetails } from "./_components/user-details";
+import MembershipForm from "../_components/membership-form";
+import { Member } from "../../_types";
 
 export function MembersTable() {
-  const memoizedTableColumns = useMemo(() => MembersTableColumns, []);
   const memoizedTabletoolbar = useMemo(() => MembersToolbar, []);
+
+  const membersColulmns = useMembersTableColumns();
 
   const members = useGetMembers();
 
@@ -29,7 +40,7 @@ export function MembersTable() {
         />
       ) : (
         <DataTable
-          columns={memoizedTableColumns}
+          columns={membersColulmns}
           Toolbar={memoizedTabletoolbar}
           data={data || []}
           count={0}

@@ -124,4 +124,5 @@ export interface MembersResponse {
 
 export type FailedCreateMemberType = ResetPasswordErrorType & {
   data: Array<any>;
+  error?: string;
 };

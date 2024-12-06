@@ -37,3 +37,31 @@ export const churchCreateMember = async (data: MembershipformSchemaType) => {
     }
   }
 };
+
+export const churchDeleteMember = async (id: string) => {
+  try {
+    const response = await query<FailedCreateMemberType>(
+      ChurchServices.DeleteMember(id)
+    );
+    if (response.status_code === 200) {
+      return {
+        success: true,
+        message: response.message,
+      };
+    }
+    if (response.hasOwnProperty("error")) {
+      const message = response.error as string;
+      return {
+        success: false,
+        message,
+      };
+    }
+  } catch (error) {
+    if (isNativeError(error)) {
+      return {
+        success: false,
+        message: error.message,
+      };
+    }
+  }
+};
