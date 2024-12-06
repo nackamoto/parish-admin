@@ -126,3 +126,19 @@ export type FailedCreateMemberType = ResetPasswordErrorType & {
   data: Array<any>;
   error?: string;
 };
+
+export type GetBaseResponse<T> = {
+  status: string;
+  status_code: number;
+  message: string;
+  data: {
+    count: number;
+    next: string | null;
+    previous: string | null;
+    results: T;
+  };
+};
+export type MemberTitle = {
+  name: string;
+  description?: string;
+};

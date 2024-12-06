@@ -25,7 +25,7 @@ export default function FormInput<T extends FieldValues>(
           <FormLabel className="">{props.label}</FormLabel>
           <FormControl className="placeholder-zinc-500">
             <Input
-              className={cn("h-12 rounded-md", props.className || "")}
+              className={cn("rounded-md", props.className || "")}
               {...props}
               {...field}
             />

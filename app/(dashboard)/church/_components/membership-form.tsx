@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -14,7 +14,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/app/components/ui/form";
-import { Input } from "@/app/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -26,31 +25,36 @@ import { Switch } from "@/app/components/ui/switch";
 import { churchCreateMember } from "../_actions.church";
 import { useToast } from "@/hooks/use-toast";
 import FieldErrorsCard from "@/app/components/dialog/list.errors";
-import { useGetMembers } from "../../_hooks";
+import { useGetMembers, useGetMemberTitles } from "../../_hooks";
+import { FormSelectSearch } from "@/app/components/form/searchable.select";
+import FormInput from "@/app/components/form/form-input";
+import { QuickAddMemberTitle } from "./member-title";
+import FormPhoneInput from "@/app/components/form/form-phone-input";
+import FormInputCountries from "@/app/components/form/form-country-select";
 
 export default function MembershipForm() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const members = useGetMembers();
+  const memberTitles = useGetMemberTitles();
 
   const form = useForm<MembershipformSchemaType>({
     resolver: zodResolver(MembershipformSchema),
     defaultValues: {
-      membership_number: "m00903838748j",
-      member_title: "Miss.",
-      create_user: true,
-      date_of_birth: "1985-05-15",
+      membership_number: "",
+      member_title: "",
+      create_user: false,
+      date_of_birth: "",
       email: "",
       first_name: "",
       last_name: "",
       middle_name: "",
       maiden_name: "",
       gender: "M",
-      hometown: "Bogoso",
+      hometown: "",
       marital_status: "Single",
-      nationality: "Ghana",
+      nationality: "GH",
       other_phone_number: "",
-      phone_number: "+233208589671",
-      place_of_birth: "Tamale",
+      phone_number: "",
+      place_of_birth: "",
     },
   });
 
@@ -69,13 +73,17 @@ export default function MembershipForm() {
         description: <FieldErrorsCard errors={response?.data} />,
       });
     }
-
-    setIsSubmitting(true);
-    // In a real application, you would send this data to your server
-    console.log(values);
-    await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate API call
-    setIsSubmitting(false);
   }
+
+  const cacheMemberTitles = useMemo(() => {
+    if (memberTitles?.data) {
+      return memberTitles?.data?.data?.results.map((item) => ({
+        label: item.name,
+        value: item.name,
+      }));
+    }
+    return [];
+  }, [memberTitles?.data]);
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
@@ -84,44 +92,19 @@ export default function MembershipForm() {
           onSubmit={form.handleSubmit(onSubmit)}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
         >
-          <FormField
-            control={form.control}
+          <FormInput
             name="membership_number"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel>Membership Number</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+            label="Membership No."
+            placeholder="Provide membership no."
           />
-          <FormField
-            control={form.control}
+          <FormSelectSearch
+            data={cacheMemberTitles}
             name="member_title"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel>Title</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a title" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="Mr.">Mr.</SelectItem>
-                    <SelectItem value="Mrs.">Mrs.</SelectItem>
-                    <SelectItem value="Miss.">Miss.</SelectItem>
-                    <SelectItem value="Dr.">Dr.</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
+            label="Title"
+            formItemClassname="mt-1.5"
+            description="This is the language that will be used in the dashboard."
+            placeholder="Search or add title..."
+            EmptyIndicator={QuickAddMemberTitle}
           />
           <FormField
             control={form.control}
@@ -143,83 +126,37 @@ export default function MembershipForm() {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
+          <FormInput
             name="date_of_birth"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel>Date of Birth</FormLabel>
-                <FormControl>
-                  <Input {...field} type="date" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+            label="Date of Birth"
+            placeholder="YYYY-MM-DD"
+            type="date"
           />
-          <FormField
-            control={form.control}
+          <FormInput
             name="email"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input {...field} type="email" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+            label="Email"
+            placeholder="Email address"
+            type="email"
           />
-          <FormField
-            control={form.control}
+          <FormInput
             name="first_name"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel>First Name</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+            label="First Name"
+            placeholder="First name"
           />
-          <FormField
-            control={form.control}
+          <FormInput
             name="last_name"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel>Last Name</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+            label="Last Name"
+            placeholder="Last name"
           />
-          <FormField
-            control={form.control}
+          <FormInput
             name="middle_name"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel>Middle Name</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+            label="Middle Name"
+            placeholder="Middle name"
           />
-          <FormField
-            control={form.control}
+          <FormInput
             name="maiden_name"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel>Maiden Name</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+            label="Maiden Name"
+            placeholder="Maiden name"
           />
           <FormField
             control={form.control}
@@ -245,19 +182,7 @@ export default function MembershipForm() {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="hometown"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel>Hometown</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <FormInput name="hometown" label="Hometown" placeholder="Hometown" />
           <FormField
             control={form.control}
             name="marital_status"
@@ -277,72 +202,42 @@ export default function MembershipForm() {
                     <SelectItem value="Single">Single</SelectItem>
                     <SelectItem value="Married">Married</SelectItem>
                     <SelectItem value="Divorced">Divorced</SelectItem>
-                    <SelectItem value="Widowed">Widowed</SelectItem>
+                    <SelectItem value="Separated">Separated</SelectItem>
+                    <SelectItem value="Widower">Widower</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
+          <FormInputCountries
             name="nationality"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel>Nationality</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+            label="Nationality"
+            placeholder="Select country"
           />
-          <FormField
-            control={form.control}
+          <FormPhoneInput
             name="other_phone_number"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel>Other Phone Number</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+            label="Other Phone Number"
+            placeholder="Other phone number"
           />
-          <FormField
-            control={form.control}
+          <FormPhoneInput
             name="phone_number"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel>Phone Number</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+            label="Phone Number"
+            placeholder="Phone number"
           />
-          <FormField
-            control={form.control}
+          <FormInput
             name="place_of_birth"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel>Place of Birth</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+            label="Place of Birth"
+            placeholder="Place of birth"
           />
           <div className="col-span-full mt-6">
             <Button
               type="submit"
+              size={`lg`}
               className="w-full sm:w-auto"
-              disabled={isSubmitting}
+              disabled={form.formState.isSubmitting}
             >
-              {isSubmitting ? "Submitting..." : "Submit"}
+              {form.formState.isSubmitting ? "Submitting..." : "Submit"}
             </Button>
           </div>
         </form>
