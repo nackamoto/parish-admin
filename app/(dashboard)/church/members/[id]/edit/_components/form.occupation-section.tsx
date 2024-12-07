@@ -10,7 +10,7 @@ import {
 import { Input } from "@/app/components/ui/input";
 import { Button } from "@/app/components/ui/button";
 import { useFieldArray, UseFormReturn } from "react-hook-form";
-import { PlusCircle, Trash2 } from "lucide-react";
+import { PlusCircle } from "lucide-react";
 import { MembershipformSchemaType } from "@/app/(dashboard)/church/_components/membership-form";
 import {
   useGetJobTitles,
@@ -36,23 +36,6 @@ export function OccupationsSection({ form }: OccupationsSectionProps) {
           key={field.id}
           className="space-y-4 p-3 border rounded-md bg-amber-50 relative"
         >
-          {/* <FormField
-            control={form.control}
-            name={`occupations.${index}.industry`}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Industry</FormLabel>
-                <FormControl>
-                  <Input
-                    type="number"
-                    {...field}
-                    onChange={(e) => field.onChange(parseInt(e.target.value))}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          /> */}
           <FormSelectSearch
             data={industries?.results || []}
             name={`occupations.${index}.industry`}
@@ -83,23 +66,7 @@ export function OccupationsSection({ form }: OccupationsSectionProps) {
             placeholder="Search or add title..."
             EmptyIndicator={undefined}
           />
-          {/* <FormField
-            control={form.control}
-            name={`occupations.${index}.job_title`}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Job Title</FormLabel>
-                <FormControl>
-                  <Input
-                    type="number"
-                    {...field}
-                    onChange={(e) => field.onChange(parseInt(e.target.value))}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          /> */}
+
           <FormField
             control={form.control}
             name={`occupations.${index}.start_date`}
@@ -140,9 +107,9 @@ export function OccupationsSection({ form }: OccupationsSectionProps) {
         variant="outline"
         onClick={() =>
           append({
-            industry: 1,
+            industry: 0,
             institution_of_employment: "",
-            job_title: 1,
+            job_title: 0,
             start_date: "",
             end_date: "",
           })

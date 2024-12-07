@@ -11,7 +11,7 @@ import {
   FormMessage,
 } from "@/app/components/ui/form";
 import { Input } from "@/app/components/ui/input";
-import { useFormContext, UseFormReturn } from "react-hook-form";
+import { UseFormReturn } from "react-hook-form";
 
 interface AddressSectionProps {
   form: UseFormReturn<MembershipformSchemaType>;
@@ -49,19 +49,7 @@ export function AddressSection({ form }: AddressSectionProps) {
           </FormItem>
         )}
       />
-      {/* <FormField
-        control={form.control}
-        name="address.city"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>City</FormLabel>
-            <FormControl>
-              <Input {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      /> */}
+
       <FormSelectSearch
         data={cities?.results || []}
         name="address.city"
@@ -78,32 +66,7 @@ export function AddressSection({ form }: AddressSectionProps) {
         placeholder="Search or add title..."
         EmptyIndicator={undefined}
       />
-      {/* <FormField
-        control={form.control}
-        name="address.region"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Region</FormLabel>
-            <FormControl>
-              <Input {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      /> */}
-      {/* <FormField
-        control={form.control}
-        name="address.country"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Country</FormLabel>
-            <FormControl>
-              <Input {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      /> */}
+
       <FormInputCountries
         name="address.country"
         label="Country"
