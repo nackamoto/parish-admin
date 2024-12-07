@@ -44,7 +44,12 @@ export default function FormInputCountries<T extends FieldValues>(
       disabled={props.disabled}
       name={props.name}
       render={({ field }) => (
-        <FormItem className={props.formItemClassname}>
+        <FormItem
+          className={cn(
+            "flex flex-col gap-1",
+            !field.value && "text-muted-foreground"
+          )}
+        >
           <FormLabel className="">{props.label}</FormLabel>
           <FormControl className="placeholder-zinc-500">
             <Popover>
@@ -56,7 +61,7 @@ export default function FormInputCountries<T extends FieldValues>(
                   disabled={false}
                   role="combobox"
                   className={cn(
-                    "w-[250px] justify-between",
+                    "justify-between",
                     !field.value && "text-muted-foreground"
                   )}
                 >

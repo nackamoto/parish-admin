@@ -84,7 +84,7 @@ export function FormSelectSearch<Tkey extends FieldValues>(
                   variant="outline"
                   role="combobox"
                   className={cn(
-                    "w-[250px] justify-between",
+                    "flex-1 justify-between",
                     !field.value && "text-muted-foreground"
                   )}
                 >

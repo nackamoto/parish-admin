@@ -1,77 +1,88 @@
 "use client";
 
-import { useMemo } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import * as z from "zod";
 import { Button } from "@/app/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/app/components/ui/form";
+import { QuickAddMemberTitle } from "@/app/(dashboard)/church/_components/member-title";
+import FormInputCountries from "@/app/components/form/form-country-select";
+import FormPhoneInput from "@/app/components/form/form-phone-input";
+import { FormSelectSearch } from "@/app/components/form/searchable.select";
 import {
   Select,
-  SelectContent,
-  SelectItem,
   SelectTrigger,
   SelectValue,
+  SelectContent,
+  SelectItem,
 } from "@/app/components/ui/select";
-import { Switch } from "@/app/components/ui/switch";
-import { churchCreateMember } from "../_actions.church";
-import { useToast } from "@/hooks/use-toast";
-import FieldErrorsCard from "@/app/components/dialog/list.errors";
-import { useGetMembers, useGetMemberTitles } from "../../_hooks";
-import { FormSelectSearch } from "@/app/components/form/searchable.select";
+import {
+  MembershipformSchema,
+  MembershipformSchemaType,
+} from "@/app/(dashboard)/church/_components/membership-form";
 import FormInput from "@/app/components/form/form-input";
-import { QuickAddMemberTitle } from "./member-title";
-import FormPhoneInput from "@/app/components/form/form-phone-input";
-import FormInputCountries from "@/app/components/form/form-country-select";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { AddressSection } from "./form.address-section";
+import { OccupationsSection } from "./form.occupation-section";
+import { useGetMemberTitles } from "@/app/(dashboard)/_hooks";
+import { useMemo } from "react";
 
-export default function MembershipForm() {
-  const members = useGetMembers();
+export default function MemberForm() {
   const memberTitles = useGetMemberTitles();
-
   const form = useForm<MembershipformSchemaType>({
     resolver: zodResolver(MembershipformSchema),
     defaultValues: {
-      membership_number: "",
+      membership_number: "testin1",
       member_title: "",
       date_of_birth: "",
-      email: "",
-      first_name: "",
-      last_name: "",
-      middle_name: "",
-      maiden_name: "",
+      email: "email@gmail.com",
+      first_name: "peter 1",
+      last_name: "last name 2",
+      middle_name: "not found name",
+      maiden_name: "not maiden name",
       gender: "M",
-      hometown: "",
+      hometown: "HO",
       marital_status: "Single",
       nationality: "GH",
-      other_phone_number: "",
-      phone_number: "",
-      place_of_birth: "",
+      other_phone_number: "+2332987445122",
+      phone_number: "+2337895552455",
+      place_of_birth: "china",
+      address: {
+        address_line1: "",
+        address_line2: "",
+        city: 0,
+        region: 0, // use api to get regions
+        country: "",
+        postal_code: "",
+        digital_address: "",
+      },
+      occupations: [
+        {
+          industry: 0, // use api to get industries
+          institution_of_employment: "",
+          job_title: 0, // use api to get job titles
+          start_date: "",
+          end_date: "",
+        },
+      ],
     },
   });
 
-  const { toast } = useToast();
-
-  async function onSubmit(values: MembershipformSchemaType) {
-    const response = await churchCreateMember(values);
-    if (response?.success) {
-      toast({
-        description: response?.message,
-      });
-      form.reset();
-      members.refetch();
-    } else {
-      toast({
-        description: <FieldErrorsCard errors={response?.data} />,
-      });
-    }
+  function onSubmit(values: MembershipformSchemaType) {
+    console.log("values", values);
+    console.log(values);
+    console.log("errors", form.formState.errors);
   }
 
   const cacheMemberTitles = useMemo(() => {
@@ -85,7 +96,7 @@ export default function MembershipForm() {
   }, [memberTitles?.data]);
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl border py-4 rounded-md">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -105,26 +116,7 @@ export default function MembershipForm() {
             placeholder="Search or add title..."
             EmptyIndicator={QuickAddMemberTitle}
           />
-          <FormField
-            control={form.control}
-            name="create_user"
-            render={({ field }) => (
-              <FormItem className="col-span-full sm:col-span-2 lg:col-span-3 flex flex-row items-center justify-between rounded-lg border p-4">
-                <div className="space-y-0.5">
-                  <FormLabel className="text-base">Create User</FormLabel>
-                  <FormDescription>
-                    Create a user account for this member
-                  </FormDescription>
-                </div>
-                <FormControl>
-                  <Switch
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
-              </FormItem>
-            )}
-          />
+
           <FormInput
             name="date_of_birth"
             label="Date of Birth"
@@ -229,12 +221,37 @@ export default function MembershipForm() {
             label="Place of Birth"
             placeholder="Place of birth"
           />
-          <div className="col-span-full mt-3">
+          <div className="col-span-full mt-6">
+            <Accordion
+              type="multiple"
+              // value={openSections}
+              // onValueChange={setOpenSections}
+            >
+              <AccordionItem value="address">
+                <AccordionTrigger>Address</AccordionTrigger>
+                <AccordionContent>
+                  <AddressSection form={form} />
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="occupations">
+                <AccordionTrigger>Occupations</AccordionTrigger>
+                <AccordionContent>
+                  <OccupationsSection form={form} />
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </div>
+
+          <div className="col-span-full mt-6">
             <Button
               type="submit"
+              // onClick={() => {
+              //   console.log("errors", form.formState.errors);
+              //   console.log("values", form.getValues());
+              // }}
               size={`lg`}
               className="w-full sm:w-auto"
-              disabled={form.formState.isSubmitting}
+              // disabled={form.formState.isSubmitting}
             >
               {form.formState.isSubmitting ? "Submitting..." : "Submit"}
             </Button>
@@ -244,79 +261,3 @@ export default function MembershipForm() {
     </div>
   );
 }
-
-export const MembershipformSchema = z.object({
-  membership_number: z.string().min(1, "Membership number is required"),
-  member_title: z.string().min(1, "Title is required"),
-  create_user: z.boolean().optional(),
-  date_of_birth: z.string({
-    required_error: "Date of birth is required",
-  }),
-  // .date("Invalid date format. Use YYYY-MM-DD"),
-  // .regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format. Use YYYY-MM-DD"),
-  email: z.string().email("Invalid email address").optional().or(z.literal("")),
-  first_name: z.string().min(1, "First name is required"),
-  last_name: z.string().min(1, "Last name is required"),
-  middle_name: z.string().optional(),
-  maiden_name: z.string().optional(),
-  gender: z.enum(["M", "F"], {
-    required_error: "Please select a gender",
-  }),
-  hometown: z.string().min(1, "Hometown is required"),
-  marital_status: z.string().min(1, "Marital status is required"),
-  nationality: z.string().min(1, "Nationality is required"),
-  other_phone_number: z.string().optional(),
-  phone_number: z.string().min(1, "Phone number is required"),
-  place_of_birth: z.string().min(1, "Place of birth is required"),
-  occupations: z
-    .array(
-      z.object({
-        industry: z.coerce
-          .number({
-            required_error: "Industry is required",
-            invalid_type_error: "Industry is invalid",
-          })
-          .refine((val) => val > 0, {
-            message: "Industry is required",
-          }),
-        institution_of_employment: z.string(),
-        job_title: z.number(),
-        start_date: z.string(),
-        end_date: z.string(),
-      })
-    )
-    .optional(),
-  address: z
-    .object({
-      address_line1: z.string(),
-      address_line2: z.string().optional(),
-      city: z.coerce
-        .number({
-          required_error: "City is required",
-          invalid_type_error: "City is invalid",
-        })
-        .refine((val) => val > 0, {
-          message: "City is required",
-        }),
-      region: z.coerce
-        .number({
-          required_error: "Region is required",
-          invalid_type_error: "Region is invalid",
-        })
-        .refine((val) => val > 0, {
-          message: "Region is required",
-        }),
-      country: z.string(),
-      postal_code: z.string(),
-      digital_address: z.string(),
-    })
-    .optional(),
-  // emergency_contacts: z.array(
-  //   z.object({
-  //     name: z.string(),
-  //     phone_number: z.string(),
-  //     relationship: z.string(),
-  //   })
-  // ),
-});
-export type MembershipformSchemaType = z.infer<typeof MembershipformSchema>;

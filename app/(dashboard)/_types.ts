@@ -142,3 +142,7 @@ export type MemberTitle = {
   name: string;
   description?: string;
 };
+export type Region = {
+  id: number;
+  name: string;
+};

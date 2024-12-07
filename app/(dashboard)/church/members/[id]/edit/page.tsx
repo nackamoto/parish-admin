@@ -4,6 +4,7 @@ import { query } from "@/app/_axios";
 import { Separator } from "@/app/components/ui/separator";
 import { SidebarTrigger } from "@/app/components/ui/sidebar";
 import type { PageProps } from "@/.next/types/app/layout";
+import MemberForm from "./_components/form.update-member";
 
 export default async function EditMember({ params }: PageProps) {
   const { id } = await params;
@@ -19,16 +20,17 @@ export default async function EditMember({ params }: PageProps) {
           <span className="gap-2">
             <h1 className="text-2xl font-bold">{member.full_name}</h1>
             <p className="text-base text-gray-400">
-              Editing,{" "}
-              <strong className="text-blue-500 text-md">
-                {member.full_name}
-              </strong>
+              {`Update member details for `}
+              <i className="text-blue-500">{member.full_name}</i>
             </p>
           </span>
           <SidebarTrigger />
         </div>
         <Separator />
       </header>
+      <section className="flex-1 p-2 place-content-center">
+        <MemberForm />
+      </section>
     </main>
   );
 }
