@@ -13,6 +13,6 @@
 * [X] Admin can view all members in a table
 * [X] Admin can perform Delete on a member
 * [X] Admin can create Member Title on the fly during member creating
-* [ ] Admin can update Member information, (including partial update)
+* [X] Admin can update Member information, (including partial update)
 * [X] Admin can reset password in settings
 * [X] Admin can logout successfully
