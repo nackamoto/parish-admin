@@ -1,7 +1,7 @@
 import { AxiosRequestHeaders } from "axios";
 
 type ServicesType<SData = unknown> = {
-  method: `GET` | `POST` | `PUT` | `DELETE`;
+  method: `GET` | `POST` | `PUT` | `DELETE` | `PATCH` | `OPTIONS` | `HEAD`;
   url: string;
   data?: SData;
   params?: Record<string, unknown>;

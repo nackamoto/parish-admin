@@ -14,7 +14,7 @@ import { Input } from "@/app/components/ui/input";
 import { UseFormReturn } from "react-hook-form";
 
 interface AddressSectionProps {
-  form: UseFormReturn<MembershipformSchemaType>;
+  form: UseFormReturn<Partial<MembershipformSchemaType>>;
 }
 
 export function AddressSection({ form }: AddressSectionProps) {

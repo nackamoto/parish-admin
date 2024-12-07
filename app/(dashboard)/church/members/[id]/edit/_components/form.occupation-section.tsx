@@ -19,7 +19,7 @@ import {
 import { FormSelectSearch } from "@/app/components/form/searchable.select";
 
 interface OccupationsSectionProps {
-  form: UseFormReturn<MembershipformSchemaType>;
+  form: UseFormReturn<Partial<MembershipformSchemaType>>;
 }
 
 export function OccupationsSection({ form }: OccupationsSectionProps) {

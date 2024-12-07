@@ -40,7 +40,7 @@ export default function MembershipForm() {
     resolver: zodResolver(MembershipformSchema),
     defaultValues: {
       membership_number: "",
-      member_title: "",
+      member_title: 0,
       date_of_birth: "",
       email: "",
       first_name: "",
@@ -247,7 +247,14 @@ export default function MembershipForm() {
 
 export const MembershipformSchema = z.object({
   membership_number: z.string().min(1, "Membership number is required"),
-  member_title: z.string().min(1, "Title is required"),
+  member_title: z.coerce
+    .number({
+      required_error: "Member title is required",
+      invalid_type_error: "Member title is invalid",
+    })
+    .refine((val) => val > 0, {
+      message: "Member title is required",
+    }),
   create_user: z.boolean().optional(),
   date_of_birth: z.string({
     required_error: "Date of birth is required",
@@ -290,14 +297,9 @@ export const MembershipformSchema = z.object({
     .object({
       address_line1: z.string(),
       address_line2: z.string().optional(),
-      city: z.coerce
-        .number({
-          required_error: "City is required",
-          invalid_type_error: "City is invalid",
-        })
-        .refine((val) => val > 0, {
-          message: "City is required",
-        }),
+      city: z.coerce.number().refine((val) => val > 0, {
+        message: "City is required",
+      }),
       region: z.coerce
         .number({
           required_error: "Region is required",

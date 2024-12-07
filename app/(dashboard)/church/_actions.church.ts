@@ -38,7 +38,40 @@ export const churchCreateMember = async (data: MembershipformSchemaType) => {
     }
   }
 };
-
+export const churchUpdateMember = async (
+  id: string,
+  data: Partial<MembershipformSchemaType>
+) => {
+  try {
+    const response = await query<FailedCreateMemberType>(
+      ChurchServices.UpdateMember(id, data)
+    );
+    if (response.hasOwnProperty("errors")) {
+      // let's destructure the error and return them as an array of their messages
+      // [error1, error2, error3]
+      const details = response.errors.detail;
+      return {
+        success: false,
+        message: response.message,
+        data: Object.values(details).flat(),
+      };
+    }
+    if (response.status_code === 200) {
+      return {
+        success: true,
+        message: response.message,
+        data: response.data,
+      };
+    }
+  } catch (error) {
+    if (isNativeError(error)) {
+      return {
+        success: false,
+        message: error.message,
+      };
+    }
+  }
+};
 export const churchDeleteMember = async (id: string) => {
   try {
     const response = await query<FailedCreateMemberType>(

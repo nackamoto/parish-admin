@@ -8,6 +8,13 @@ export const ChurchServices = {
       data,
     } as ServicesType<TData>;
   },
+  UpdateMember: <TData>(id: string, data: TData) => {
+    return {
+      method: "PATCH",
+      url: `/members/${id}`,
+      data,
+    } as ServicesType<TData>;
+  },
   DeleteMember: <TData>(id: string) => {
     return {
       method: "DELETE",

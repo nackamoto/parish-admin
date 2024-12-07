@@ -4,7 +4,7 @@ import { query } from "@/app/_axios";
 import { Separator } from "@/app/components/ui/separator";
 import { SidebarTrigger } from "@/app/components/ui/sidebar";
 import type { PageProps } from "@/.next/types/app/layout";
-import MemberForm from "./_components/form.update-member";
+import UpdateMemberInformation from "./_components/form.update-member";
 
 export default async function EditMember({ params }: PageProps) {
   const { id } = await params;
@@ -29,7 +29,7 @@ export default async function EditMember({ params }: PageProps) {
         <Separator />
       </header>
       <section className="flex-1 p-2 place-content-center">
-        <MemberForm />
+        <UpdateMemberInformation member={member} />
       </section>
     </main>
   );

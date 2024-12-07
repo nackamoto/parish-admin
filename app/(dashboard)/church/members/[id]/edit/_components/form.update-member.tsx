@@ -37,59 +37,77 @@ import { AddressSection } from "./form.address-section";
 import { OccupationsSection } from "./form.occupation-section";
 import { useGetMemberTitles } from "@/app/(dashboard)/_hooks";
 import { useMemo } from "react";
+import FieldErrorsCard from "@/app/components/dialog/list.errors";
+import { churchUpdateMember } from "@/app/(dashboard)/church/_actions.church";
+import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
+import { Member } from "@/app/(dashboard)/_types";
 
-export default function MemberForm() {
+export default function UpdateMemberInformation({
+  member,
+}: {
+  member: Member;
+}) {
   const memberTitles = useGetMemberTitles();
-  const form = useForm<MembershipformSchemaType>({
+  const form = useForm<Partial<MembershipformSchemaType>>({
     resolver: zodResolver(MembershipformSchema),
     defaultValues: {
-      membership_number: "testin1",
-      member_title: "",
-      date_of_birth: "",
-      email: "email@gmail.com",
-      first_name: "peter 1",
-      last_name: "last name 2",
-      middle_name: "not found name",
-      maiden_name: "not maiden name",
-      gender: "M",
-      hometown: "HO",
-      marital_status: "Single",
-      nationality: "GH",
-      other_phone_number: "+2332987445122",
-      phone_number: "+2337895552455",
-      place_of_birth: "china",
+      membership_number: member?.membership_number || "",
+      member_title: member?.title || 0,
+      date_of_birth: member?.date_of_birth || "",
+      email: member?.email || "",
+      first_name: member?.first_name || "",
+      last_name: member?.last_name || "",
+      middle_name: member?.middle_name || "",
+      maiden_name: member?.maiden_name || "",
+      gender: member?.gender as "M" | "F",
+      hometown: member?.hometown || "",
+      marital_status: member?.marital_status || "",
+      nationality: member?.nationality || "GH",
+      other_phone_number: member?.other_phone_number || "",
+      phone_number: member?.phone_number || "",
+      place_of_birth: member?.place_of_birth || "",
       address: {
-        address_line1: "",
-        address_line2: "",
-        city: 0,
-        region: 0, // use api to get regions
-        country: "",
-        postal_code: "",
-        digital_address: "",
+        address_line1: member?.address?.address_line1 || "",
+        address_line2: member?.address?.address_line2 || "",
+        city: member?.address?.city || 0, // use api to get cities
+        region: member?.address?.region || 0, // use api to get regions
+        country: member?.address?.country || "GH",
+        postal_code: member?.address?.postal_code || "",
+        digital_address: member?.address?.digital_address || "",
       },
-      occupations: [
-        {
-          industry: 0, // use api to get industries
-          institution_of_employment: "",
-          job_title: 0, // use api to get job titles
-          start_date: "",
-          end_date: "",
-        },
-      ],
+      occupations: member?.occupations.map((item) => ({
+        industry: item?.industry,
+        institution_of_employment: item?.institution_of_employment,
+        job_title: item?.job_title,
+        start_date: item?.start_date,
+        end_date: item?.end_date || "",
+      })),
     },
   });
 
-  function onSubmit(values: MembershipformSchemaType) {
-    console.log("values", values);
-    console.log(values);
-    console.log("errors", form.formState.errors);
+  const { toast } = useToast();
+  const router = useRouter();
+
+  async function onSubmit(values: Partial<MembershipformSchemaType>) {
+    const response = await churchUpdateMember(member?.id, values);
+    if (response?.success) {
+      toast({
+        description: response?.message,
+      });
+      router.refresh();
+    } else {
+      toast({
+        description: <FieldErrorsCard errors={response?.data} />,
+      });
+    }
   }
 
   const cacheMemberTitles = useMemo(() => {
     if (memberTitles?.data) {
       return memberTitles?.data?.data?.results.map((item) => ({
         label: item.name,
-        value: item.name,
+        value: item.id,
       }));
     }
     return [];

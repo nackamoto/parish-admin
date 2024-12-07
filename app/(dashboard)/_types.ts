@@ -79,7 +79,7 @@ export interface Member {
   membership_number: string;
   user: string;
   age: string;
-  title: string | null;
+  title: number;
   full_name: string;
   first_name: string;
   last_name: string;
@@ -139,6 +139,7 @@ export type GetBaseResponse<T> = {
   };
 };
 export type MemberTitle = {
+  id: number;
   name: string;
   description?: string;
 };
