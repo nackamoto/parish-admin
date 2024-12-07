@@ -66,7 +66,6 @@ export default function FormInputCountries<T extends FieldValues>(
         response = memoizedCountries.find(
           (datum) => datum.label === value
         )?.value;
-        console.log("found 1 in country: ", response);
       } else {
         response = memoizedCountries.find(
           (datum) => datum.value === value
