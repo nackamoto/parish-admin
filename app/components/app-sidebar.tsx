@@ -32,7 +32,7 @@ const data = {
         },
         {
           title: "Settings",
-          url: "/settings",
+          url: "/settings/account",
         },
       ],
     },
