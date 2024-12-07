@@ -78,7 +78,7 @@ export default function MembershipForm() {
     if (memberTitles?.data) {
       return memberTitles?.data?.data?.results.map((item) => ({
         label: item.name,
-        value: item.name,
+        value: item.id,
       }));
     }
     return [];
@@ -247,14 +247,9 @@ export default function MembershipForm() {
 
 export const MembershipformSchema = z.object({
   membership_number: z.string().min(1, "Membership number is required"),
-  member_title: z.coerce
-    .number({
-      required_error: "Member title is required",
-      invalid_type_error: "Member title is invalid",
-    })
-    .refine((val) => val > 0, {
-      message: "Member title is required",
-    }),
+  member_title: z.coerce.number().refine((val) => val > 0, {
+    message: "Member title is required",
+  }),
   create_user: z.boolean().optional(),
   date_of_birth: z.string({
     required_error: "Date of birth is required",

@@ -1,11 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {
-  LucideChurch,
-  LucideLayoutDashboard,
-  LucideUsers2,
-} from "lucide-react";
+import { LucideChurch, LucideLayoutDashboard } from "lucide-react";
 
 import { NavMain } from "@/app/components/nav-main";
 import { NavUser } from "@/app/components/nav-user";

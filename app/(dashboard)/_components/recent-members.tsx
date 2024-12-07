@@ -12,7 +12,7 @@ export function RecentMembers() {
   const query = useGetMembers();
   let members;
   if (query.isFetched) {
-    members = query.data?.data.results.slice(0, 5);
+    members = query.data?.data.results.slice(0, 10);
   }
   return (
     <div className="space-y-8">
@@ -28,7 +28,7 @@ export function RecentMembers() {
             </p>
             <p className="text-sm text-muted-foreground">{member.email}</p>
           </div>
-          <div className="ml-auto text-sm text-neutral-700">
+          <div className="ml-auto text-sm text-neutral-700 truc">
             Created at{" "}
             <b className="text-blue-500 tracking-tighter">
               {formatDate(member.created_at)}
