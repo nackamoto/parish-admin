@@ -45,9 +45,11 @@ export default async function Page() {
           <Card className="col-span-4 md:col-span-3 rounded-md">
             <CardHeader>
               <CardTitle>Recent Members</CardTitle>
-              <CardDescription>Showing all recent users</CardDescription>
+              <CardDescription>Showing all top 5 new members</CardDescription>
             </CardHeader>
-            <CardContent>{await RecentMembers()}</CardContent>
+            <CardContent>
+              <RecentMembers />
+            </CardContent>
           </Card>
         </div>
         <div className="grid gap-4 md:grid-cols-2 p-3">

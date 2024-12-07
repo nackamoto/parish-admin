@@ -1,5 +1,5 @@
 import { Separator } from "@/app/components/ui/separator";
-import { AccountForm } from "./_components/account-form";
+// import { AccountForm } from "./_components/account-form";
 import { AccountResetPassword } from "./_components/reset-password";
 
 export default function SettingsAccountPage() {
@@ -13,7 +13,7 @@ export default function SettingsAccountPage() {
         </p>
       </div>
       <Separator />
-      <AccountForm />
+      {/* <AccountForm /> */}
       <AccountResetPassword />
     </div>
   );

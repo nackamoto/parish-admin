@@ -40,18 +40,18 @@ const data = {
         },
       ],
     },
-    {
-      title: "Users",
-      url: "/users",
-      icon: LucideUsers2,
-      isActive: true,
-      items: [
-        {
-          title: "Add User",
-          url: "/users/add-user",
-        },
-      ],
-    },
+    // {
+    //   title: "Users",
+    //   url: "/users",
+    //   icon: LucideUsers2,
+    //   isActive: true,
+    //   items: [
+    //     {
+    //       title: "Add User",
+    //       url: "/users/add-user",
+    //     },
+    //   ],
+    // },
     {
       title: "Church",
       url: "/church",
