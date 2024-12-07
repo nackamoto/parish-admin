@@ -6,6 +6,7 @@ import { MembershipformSchemaType } from "./_components/membership-form";
 import { FailedCreateMemberType } from "../_types";
 import { isNativeError } from "util/types";
 import { MemberTitle } from "./_components/member-title";
+import { revalidatePath } from "next/cache";
 
 export const churchCreateMember = async (data: MembershipformSchemaType) => {
   try {
@@ -50,6 +51,7 @@ export const churchUpdateMember = async (
       // let's destructure the error and return them as an array of their messages
       // [error1, error2, error3]
       const details = response.errors.detail;
+      revalidatePath("/church/members");
       return {
         success: false,
         message: response.message,

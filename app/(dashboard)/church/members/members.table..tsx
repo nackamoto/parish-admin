@@ -35,9 +35,7 @@ export function MembersTable() {
           data={data || []}
           count={0}
           limit={10}
-          onRowClick={(e) => {
-            console.log(e.original);
-          }}
+          onRowClick={() => {}}
         />
       )}
     </>

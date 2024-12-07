@@ -14,9 +14,6 @@ export default function ResendOTP() {
   const uid = rawUid?.replace(/ /g, "+").toString();
   const decryptedUid = decrypt(uid);
 
-  console.log("rawUid_", rawUid);
-  console.log("decryptedUid_", decryptedUid);
-
   async function handleResendOTP() {
     startResendTransition(async () => {
       await authResendOTP({

@@ -292,12 +292,14 @@ export const MembershipformSchema = z.object({
     .object({
       address_line1: z.string(),
       address_line2: z.string().optional(),
-      city: z.coerce.number().refine((val) => val > 0, {
-        message: "City is required",
-      }),
+      city: z.coerce
+        .number()
+        .refine((val) => val > 0, {
+          message: "City is required",
+        })
+        .optional(),
       region: z.coerce
         .number({
-          required_error: "Region is required",
           invalid_type_error: "Region is invalid",
         })
         .refine((val) => val > 0, {

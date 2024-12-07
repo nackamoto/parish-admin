@@ -263,10 +263,6 @@ export default function UpdateMemberInformation({
           <div className="col-span-full mt-6">
             <Button
               type="submit"
-              // onClick={() => {
-              //   console.log("errors", form.formState.errors);
-              //   console.log("values", form.getValues());
-              // }}
               size={`lg`}
               className="w-full sm:w-auto"
               // disabled={form.formState.isSubmitting}
