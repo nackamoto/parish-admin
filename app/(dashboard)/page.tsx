@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/card";
 import { AnalyticsOverview } from "./_components/analytics-chart";
 import { RecentMembers } from "./_components/recent-members";
-import { ShowRegionStats } from "./_components/regions-analytics";
 import { DashboardAnalytics } from "./_components/dashboard-analytics";
 
 export default async function Page() {
@@ -33,7 +32,7 @@ export default async function Page() {
         </div>
         <Separator />
         <DashboardAnalytics />
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7 p-3">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7 p-3 flex-1">
           <Card className="col-span-4 rounded-md">
             <CardHeader>
               <CardTitle>Overview</CardTitle>
@@ -45,19 +44,20 @@ export default async function Page() {
           <Card className="col-span-4 md:col-span-3 rounded-md">
             <CardHeader>
               <CardTitle>Recent Members</CardTitle>
-              <CardDescription>Showing all recent users</CardDescription>
+              <CardDescription>
+                Showing all top 10 recent members
+              </CardDescription>
             </CardHeader>
-            <CardContent>{await RecentMembers()}</CardContent>
+            <CardContent>
+              <RecentMembers />
+            </CardContent>
           </Card>
         </div>
-        <div className="grid gap-4 md:grid-cols-2 p-3">
+        {/* <div className="grid gap-4 md:grid-cols-2 p-3">
           <ShowRegionStats />
           <ShowRegionStats />
-        </div>
+        </div> */}
       </header>
     </main>
   );
 }
-
-// directly add new member from dashboard
-// directly add new user from dashboard;

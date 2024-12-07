@@ -1,5 +1,10 @@
 "use client";
-import { FieldValues, useFormContext } from "react-hook-form";
+import {
+  ControllerRenderProps,
+  FieldValues,
+  Path,
+  useFormContext,
+} from "react-hook-form";
 import {
   FormControl,
   FormField,
@@ -25,7 +30,7 @@ import {
 import { ChevronDown } from "lucide-react";
 import { Button } from "@/app/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import {
   countries,
   CountrySelectOption,
@@ -37,6 +42,41 @@ export default function FormInputCountries<T extends FieldValues>(
 ) {
   const memoizedCountries = useMemo(() => countries, []);
 
+  const formatFieldValue = useCallback(
+    (field: ControllerRenderProps<FieldValues, Path<T>>) => {
+      let response;
+      if (field.value.length > 3) {
+        response = memoizedCountries.find(
+          (datum) => datum.label === field.value
+        )?.label;
+      } else {
+        response = memoizedCountries.find(
+          (datum) => datum.value === field.value
+        )?.label;
+      }
+      return response;
+    },
+    [memoizedCountries]
+  );
+
+  const resolveSelectedCountry = useCallback(
+    (value: string) => {
+      let response;
+      if (value.length > 2) {
+        response = memoizedCountries.find(
+          (datum) => datum.label === value
+        )?.value;
+        console.log("found 1 in country: ", response);
+      } else {
+        response = memoizedCountries.find(
+          (datum) => datum.value === value
+        )?.value;
+      }
+      return response;
+    },
+    [memoizedCountries]
+  );
+
   const { control, setValue } = useFormContext();
   return (
     <FormField
@@ -44,7 +84,12 @@ export default function FormInputCountries<T extends FieldValues>(
       disabled={props.disabled}
       name={props.name}
       render={({ field }) => (
-        <FormItem className={props.formItemClassname}>
+        <FormItem
+          className={cn(
+            "flex flex-col gap-1",
+            !field.value && "text-muted-foreground"
+          )}
+        >
           <FormLabel className="">{props.label}</FormLabel>
           <FormControl className="placeholder-zinc-500">
             <Popover>
@@ -56,19 +101,20 @@ export default function FormInputCountries<T extends FieldValues>(
                   disabled={false}
                   role="combobox"
                   className={cn(
-                    "w-[250px] justify-between",
+                    "justify-between",
                     !field.value && "text-muted-foreground"
                   )}
                 >
                   <FlagComponent
-                    country={field.value}
-                    countryName={field.value}
+                    country={resolveSelectedCountry(field.value)!}
+                    countryName={resolveSelectedCountry(field.value)!}
                   />
-                  {field.value
+                  {/* {field.value
                     ? memoizedCountries.find(
                         (datum) => datum.value === field.value
                       )?.label
-                    : props.placeholder || "Select ..."}
+                    : props.placeholder || "Select ..."} */}
+                  {formatFieldValue(field) || "Select..."}
                   <ChevronDown
                     className={cn(
                       "-mr-2 size-4 opacity-50",
@@ -90,7 +136,9 @@ export default function FormInputCountries<T extends FieldValues>(
                               key={value}
                               country={value}
                               countryName={label}
-                              selectedCountry={field.value}
+                              selectedCountry={
+                                resolveSelectedCountry(field.value)!
+                              }
                               onChange={(country) => {
                                 setValue(props.name, country as any);
                               }}

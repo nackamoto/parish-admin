@@ -1,11 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {
-  LucideChurch,
-  LucideLayoutDashboard,
-  LucideUsers2,
-} from "lucide-react";
+import { LucideChurch, LucideLayoutDashboard } from "lucide-react";
 
 import { NavMain } from "@/app/components/nav-main";
 import { NavUser } from "@/app/components/nav-user";
@@ -40,18 +36,18 @@ const data = {
         },
       ],
     },
-    {
-      title: "Users",
-      url: "/users",
-      icon: LucideUsers2,
-      isActive: true,
-      items: [
-        {
-          title: "Add User",
-          url: "/users/add-user",
-        },
-      ],
-    },
+    // {
+    //   title: "Users",
+    //   url: "/users",
+    //   icon: LucideUsers2,
+    //   isActive: true,
+    //   items: [
+    //     {
+    //       title: "Add User",
+    //       url: "/users/add-user",
+    //     },
+    //   ],
+    // },
     {
       title: "Church",
       url: "/church",

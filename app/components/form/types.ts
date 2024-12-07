@@ -43,5 +43,5 @@ export interface FormSelectSearch<T extends FieldValues> {
   className?: string;
   formItemClassname?: string;
   description?: string;
-  data: { label: string; value: string }[];
+  data: { label: string; value: string | number }[];
 }

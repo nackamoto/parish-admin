@@ -15,7 +15,7 @@ export type AnalyticsCardDataType = {
   Icon?: ExoticComponent;
   title: string;
   value: number | undefined;
-  statistics: ReactNode | undefined;
+  statistics?: ReactNode | undefined;
   action?: ReactNode;
 };
 

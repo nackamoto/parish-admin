@@ -45,7 +45,7 @@ export function ViewUserDetails(user: Member) {
             <CardTitle>Personal Information</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-2">
-            <InfoItem icon={User} label="Title" value={user?.title || "N/A"} />
+            <InfoItem icon={User} label="Title" value={user?.title} />
             <InfoItem
               icon={Calendar}
               label="Date of Birth"
@@ -289,7 +289,7 @@ function InfoItem({
 }: {
   icon: React.ElementType;
   label?: string;
-  value?: string;
+  value?: string | number;
 }) {
   return (
     <div className="flex items-center gap-2">

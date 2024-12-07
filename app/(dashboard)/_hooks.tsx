@@ -3,6 +3,7 @@ import {
   GetBaseResponse,
   MembersResponse,
   MemberTitle,
+  Region,
   UsersResponse,
 } from "./_types";
 import { useSession } from "next-auth/react";
@@ -22,6 +23,72 @@ export const useGetMemberTitles = () => {
   return useFetcher<GetBaseResponse<MemberTitle[]>>(
     ChurchServices.GetMemberTitles()
   );
+};
+
+export const useGetRegions = () => {
+  const regions = useFetcher<GetBaseResponse<Region[]>>(
+    ChurchServices.GetRegions()
+  );
+  let results;
+  if (regions.isFetched) {
+    results = regions.data?.data?.results?.map((region) => ({
+      label: region.name,
+      value: region.id,
+    }));
+  }
+  return {
+    ...regions,
+    results,
+  };
+};
+export const useGetCities = () => {
+  const regions = useFetcher<GetBaseResponse<Region[]>>(
+    ChurchServices.GetCities()
+  );
+  let results;
+  if (regions.isFetched) {
+    results = regions.data?.data?.results?.map((region) => ({
+      label: region.name,
+      value: region.id,
+    }));
+  }
+  return {
+    ...regions,
+    results,
+  };
+};
+export const useGetJobTitles = () => {
+  const regions = useFetcher<GetBaseResponse<Region[]>>(
+    ChurchServices.GetJobTitles()
+  );
+  let results;
+  if (regions.isFetched) {
+    results = regions.data?.data?.results?.map((region) => ({
+      label: region.name,
+      value: region.id,
+    }));
+  }
+  return {
+    ...regions,
+    results,
+  };
+};
+
+export const useGetOccupationIndustries = () => {
+  const regions = useFetcher<GetBaseResponse<Region[]>>(
+    ChurchServices.GetOccupationIndustries()
+  );
+  let results;
+  if (regions.isFetched) {
+    results = regions.data?.data?.results?.map((region) => ({
+      label: region.name,
+      value: region.id,
+    }));
+  }
+  return {
+    ...regions,
+    results,
+  };
 };
 
 export const useGetChurches = () => {

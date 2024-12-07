@@ -8,6 +8,13 @@ export const ChurchServices = {
       data,
     } as ServicesType<TData>;
   },
+  UpdateMember: <TData>(id: string, data: TData) => {
+    return {
+      method: "PATCH",
+      url: `/members/${id}`,
+      data,
+    } as ServicesType<TData>;
+  },
   DeleteMember: <TData>(id: string) => {
     return {
       method: "DELETE",
@@ -25,6 +32,30 @@ export const ChurchServices = {
     return {
       method: `GET`,
       url: `/member-titles/`,
+    } as ServicesType<TData>;
+  },
+  GetRegions: <TData>() => {
+    return {
+      method: `GET`,
+      url: `/regions/`,
+    } as ServicesType<TData>;
+  },
+  GetCities: <TData>() => {
+    return {
+      method: "GET",
+      url: `/cities/`,
+    } as ServicesType<TData>;
+  },
+  GetJobTitles: <TData>() => {
+    return {
+      method: "GET",
+      url: `/job-titles/`,
+    } as ServicesType<TData>;
+  },
+  GetOccupationIndustries: <TData>() => {
+    return {
+      method: "GET",
+      url: `/occupation-industries/`,
     } as ServicesType<TData>;
   },
 } as const;
