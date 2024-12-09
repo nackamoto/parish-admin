@@ -42,10 +42,11 @@ export const query = async <S, E = never>(config: ServicesType) => {
 
 export const useFetcher = <TData = never>(config: Partial<ServicesType>) => {
   const { data, status } = useSession();
-  const isLoading = status === "loading";
+  const error = status === "loading" || status === "unauthenticated";
+
   return useQuery({
     queryKey: [config.url],
-    enabled: !isLoading,
+    enabled: !error,
     queryFn: async () => {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}${config.url}`,
@@ -57,7 +58,7 @@ export const useFetcher = <TData = never>(config: Partial<ServicesType>) => {
         }
       );
       const users = await response.json();
-      return users as TData;
+      return Promise.resolve(users) as Promise<TData>;
     },
   });
 };
