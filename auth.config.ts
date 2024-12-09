@@ -54,5 +54,6 @@ async function authLogin(credentials: Record<string, unknown>) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }
+    throw error;
   }
 }
