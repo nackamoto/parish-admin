@@ -13,7 +13,7 @@ export function DashboardAnalytics() {
   const getMembersToday = useCallback(() => {
     if (true) {
       const now = new Date().toLocaleDateString();
-      const createdToday = members.data?.data.results.filter((member) => {
+      const createdToday = members.data?.data?.results?.filter((member) => {
         const toLocaleDateString = new Date(
           member.created_at
         ).toLocaleDateString();
