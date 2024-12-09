@@ -31,14 +31,14 @@ export function DashboardAnalytics() {
       Icon: Users,
       title: "New Members",
       value: getMembersToday()?.length || 0,
-      statistics: <span>+5% from last week</span>,
+      statistics: <span></span>,
       // action: <button>View Details</button>,
     },
     {
       Icon: Users,
       title: "Total Users",
       value: users.data?.count,
-      statistics: <span>+10% from last month</span>,
+      statistics: <span></span>,
       action: (
         <Link
           className="text-sm text-blue-400 underline"
@@ -52,7 +52,7 @@ export function DashboardAnalytics() {
       Icon: Users,
       title: "Total Members",
       value: members?.data?.data?.count,
-      statistics: <span>+10% from last month</span>,
+      statistics: <span></span>,
       action: (
         <Link
           className="text-sm text-blue-400 underline"
